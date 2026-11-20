@@ -38,7 +38,7 @@
   .lamina { flex: 0 0 100%; min-width: 0; padding: 0 2px; }
   .lamina[aria-hidden="true"] { visibility: hidden; }
   @media (prefers-reduced-motion: reduce) { .pista, .visor { transition: none; } }
-  @media (max-width: 560px) { #contador { display: none; } .flecha .txt { display: none; } .barra { justify-content: flex-end; } }
+  @media (max-width: 560px) { #contador { display: none; } .flecha .txt { display: none; } .barra { justify-content: space-between; } #btn-calidad { white-space: nowrap; padding: 4px 9px; } .estado { font-size: 11px; } }
   body.solo .nav-top, body.solo .cab, body.solo .pie { display: none; }
   body.solo .pag { padding-top: 8px; }
 
@@ -91,6 +91,75 @@
   .nv-metodo h3 { font-size: 15px; margin: 18px 0 4px; }
   .nv-metodo p { margin: 0 0 8px; }
   .nv-hl { transition: opacity .15s; }
+  /* ---- estado de los datos ---- */
+  .estado { font-size: 12px; color: var(--color-fg-muted); white-space: nowrap; }
+  .estado.vivo { color: var(--color-ok); }
+  .izq { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  /* ---- puertas por perfil ---- */
+  .perfiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--cds-gap-md); margin-top: var(--cds-gap-xl); }
+  .perfil { text-align: left; font: inherit; color: inherit; background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md) var(--cds-pad-lg); cursor: pointer; transition: border-color .15s, transform .15s; }
+  .perfil:hover, .perfil:focus-visible { border-color: var(--color-fg); transform: translateY(-1px); outline: none; }
+  .perfil b { display: block; font-family: var(--f-serif); font-weight: 400; font-size: 19px; margin-bottom: 4px; }
+  .perfil span { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.45; }
+  .ruta { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: #eef3f7; border: 1px solid #cddbe6; border-radius: 8px; padding: 6px 10px; margin-top: 8px; font-size: 13px; }
+  .ruta[hidden] { display: none; }
+  .tab.fuera { display: none; }
+  /* ---- semáforo ---- */
+  .sem-resumen { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--cds-gap-md); }
+  .sem-chip { display: inline-block; font-size: 12px; padding: 2px 9px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+  .sem-chip.ok { color: var(--color-ok); } .sem-chip.bad { color: var(--color-bad); } .sem-chip.md { color: var(--color-warn); }
+  .sem-chip.seg { color: #2f6690; } .sem-chip.nd { color: var(--color-fg-muted); }
+  .sem-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: var(--cds-gap-md); }
+  .sem-card { border: 1px solid var(--color-border-line); border-left-width: 4px; border-radius: 8px; padding: 10px 12px; background: var(--color-panel); display: flex; flex-direction: column; gap: 4px; }
+  .sem-card.ok { border-left-color: var(--color-ok); } .sem-card.bad { border-left-color: var(--color-bad); } .sem-card.md { border-left-color: var(--color-warn); }
+  .sem-card.seg { border-left-color: #2f6690; } .sem-card.nd { border-left-color: var(--cds-chart-muted); }
+  .sem-card h3 { font-size: 14px; margin: 2px 0; line-height: 1.3; }
+  .sem-top { display: flex; justify-content: space-between; align-items: center; }
+  .sem-num { font-size: 12px; color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .sem-valor { margin: 0; font-size: 20px; font-family: var(--f-serif); }
+  .sem-meta, .sem-det, .sem-pie { margin: 0; font-size: 12px; line-height: 1.45; color: var(--color-fg-muted); }
+  .sem-meta { color: var(--color-fg); }
+  .sem-link { font-size: 12px; color: #2f6690; }
+  .sem-aviso { background: #fff6e0; border: 1px solid #ecd28f; border-radius: 8px; padding: 6px 10px; font-size: 13px; margin: 0 0 10px; }
+  /* ---- evaluación de destino ---- */
+  .ev-barras { display: flex; flex-direction: column; gap: 8px; max-width: 720px; }
+  .ev-fila { display: grid; grid-template-columns: minmax(120px, 220px) 1fr 56px; gap: 10px; align-items: center; font-size: 13px; }
+  .ev-bar { height: 12px; background: var(--cds-chart-grid); border-radius: 6px; overflow: hidden; }
+  .ev-fill { display: block; height: 100%; background: #2f6690; }
+  .ev-pct { text-align: right; }
+  .ev-amb { margin-top: 10px; border-top: 1px solid var(--color-border-line); padding-top: 8px; }
+  .ev-amb summary { cursor: pointer; font-size: 14px; }
+  .ev-ind { margin: 8px 0 0 12px; }
+  .ev-tit, .ev-bp-t, .ev-bp-a { margin: 2px 0; font-size: 13px; line-height: 1.45; }
+  .ev-pts { color: var(--color-fg-muted); }
+  .ev-bp { margin: 4px 0 6px 12px; padding-left: 10px; border-left: 2px solid var(--color-border-line); }
+  .ev-bp-a { color: var(--color-fg-muted); }
+  /* ---- mapa 3D ---- */
+  .mapa-caja { position: relative; height: 560px; border-radius: 8px; overflow: hidden; background: #dfe8ef; border: 1px solid var(--color-border-line); touch-action: none; }
+  #mapa3d { position: absolute; inset: 0; }
+  .mapa-aviso { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: rgba(255,255,255,.92); border-radius: 8px; padding: 8px 14px; font-size: 13px; z-index: 2; max-width: 80%; text-align: center; }
+  .mapa-aviso[hidden] { display: none; }
+  .mapa-pin { border: 0; background: none; padding: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
+  .mapa-pin::after { content: ''; width: 12px; height: 12px; border-radius: 50%; background: #e0502f; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.4); }
+  .mapa-pin span { font: 600 11px var(--f-sans); color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.9); white-space: nowrap; margin-bottom: 2px; }
+  .mapa-pop strong { display: block; margin-bottom: 2px; }
+  .mapa-pop p { margin: 2px 0; font-size: 12px; line-height: 1.4; }
+  .mapa-pop .dato { font-variant-numeric: tabular-nums; }
+  .mapa-pop a { font-size: 12px; color: #2f6690; }
+  .mapa-caja.lejos .mapa-pin.menor span { display: none; }
+  @media (max-width: 560px) { .mapa-caja { height: 440px; } .mapa-caja.lejos .mapa-pin span { display: none; } }
+  /* ---- asistente ---- */
+  .chat { display: grid; grid-template-columns: 1fr; gap: var(--cds-gap-md); max-width: 760px; }
+  .chat-log { height: 360px; overflow-y: auto; border: 1px solid var(--color-border-line); border-radius: 8px; padding: 10px; background: var(--color-bg); display: flex; flex-direction: column; gap: 8px; }
+  .chat-msg { max-width: 88%; border-radius: 10px; padding: 8px 12px; font-size: 14px; line-height: 1.5; }
+  .chat-msg p { margin: 0 0 4px; }
+  .chat-msg.yo { align-self: flex-end; background: var(--color-fg); color: var(--color-bg); }
+  .chat-msg.h { align-self: flex-start; background: var(--color-panel); border: 1px solid var(--color-border-line); }
+  .chat-fuente { font-size: 12px; color: var(--color-fg-muted); }
+  .chat-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chat-form { display: flex; gap: 8px; }
+  .chat-form input { flex: 1; font: inherit; padding: 8px 12px; border: 1px solid var(--color-border-line); border-radius: 8px; min-width: 0; }
+  .chat-form button { font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--color-fg); background: var(--color-fg); color: var(--color-bg); cursor: pointer; }
   .pie { margin-top: 26px; padding-top: 12px; border-top: 1px solid var(--color-border-line); font-size: 12px; color: var(--color-fg-muted); line-height: 1.55; }
 </style>
 </head>
@@ -99,20 +168,21 @@
   <header class="cab nv">
     <div>
       <p class="nv-kicker">Observatorio de Turismo Sostenible de Puerto Williams · prototipo de análisis</p>
-      <h1>Navarino bajo presión</h1>
+      <h1 data-titulo>Navarino bajo presión</h1>
     </div>
   </header>
 
   <nav class="nav-top" aria-label="Secciones del panel">
     <div class="tabs" role="tablist"></div>
     <div class="barra">
-      <span id="contador" aria-live="polite"></span>
+      <span class="izq"><span id="contador" aria-live="polite"></span><span id="estado-datos" class="estado" aria-live="polite"></span></span>
       <span class="flechas">
         <button class="nv-btn" type="button" id="btn-calidad" aria-pressed="false" title="Marca en los gráficos las cifras por confirmar o inconsistentes">Ver calidad del dato</button>
         <button class="flecha" type="button" id="ant" aria-label="Sección anterior">←<span class="txt"> Anterior</span></button>
         <button class="flecha" type="button" id="sig" aria-label="Sección siguiente"><span class="txt">Siguiente </span>→</button>
       </span>
     </div>
+    <div class="ruta" id="ruta" hidden><span id="ruta-txt"></span><button class="nv-btn" type="button" id="ruta-salir">Ver todas las secciones</button></div>
   </nav>
 
   <div class="visor" id="visor">
@@ -139,6 +209,30 @@
             <div class="nv-big" data-draw="k-m80">—</div>
             <p>meses concentran el 80% de los excursionistas de Dientes de Navarino en 2024-25; en el resto de Magallanes hacen falta <span data-draw="k-m80-ine">—</span></p>
           </div>
+        </div>
+        <h2 style="margin-top:28px;font-family:var(--f-serif);font-weight:400">¿Desde dónde miras el destino?</h2>
+        <p class="nv-sub">Elige una puerta y el panel te muestra primero lo que más te sirve. Siempre puedes volver a ver todo.</p>
+        <div class="perfiles">
+          <button class="perfil" type="button" data-perfil="emprendedor"><b>Emprendo en turismo</b><span>Cuándo llegan, de dónde vienen, cruceros que vienen y ventas del sector.</span></button>
+          <button class="perfil" type="button" data-perfil="municipio"><b>Planifico el destino</b><span>Presión sobre la comuna, contraste regional, indicadores y calidad de los datos.</span></button>
+          <button class="perfil" type="button" data-perfil="comunidad"><b>Vivo en Navarino</b><span>Cuántos visitantes hay por residente, el trekking, la isla en 3D y cómo van los indicadores.</span></button>
+        </div>
+      </section>
+
+      <section class="lamina" id="sec-mapa" data-clave="mapa" data-tab="Mapa 3D">
+        <div class="nv-card">
+          <p class="nv-step">Isla Navarino en tres dimensiones</p>
+          <h2>El territorio detrás de los datos</h2>
+          <p class="nv-sub">Relieve real con imagen satelital. Arrastra para moverte, usa dos dedos o clic derecho para inclinar y girar, y toca un punto para ver sus datos. En rojo, el circuito Dientes de Navarino y el sendero a Lago Windhond según OpenStreetMap.</p>
+          <div class="nv-bar">
+            <button class="nv-btn" type="button" data-mapa="vuelo">Sobrevolar la isla</button>
+            <button class="nv-btn" type="button" data-mapa="general">Vista general</button>
+            <button class="nv-btn" type="button" data-mapa="pw">Puerto Williams</button>
+            <button class="nv-btn" type="button" data-mapa="dientes">Dientes de Navarino</button>
+            <button class="nv-btn" type="button" data-mapa="plano">Plano / 3D</button>
+          </div>
+          <div class="mapa-caja"><div id="mapa3d" aria-label="Mapa 3D de Isla Navarino"></div><p class="mapa-aviso" id="mapa-aviso">El mapa se carga al abrir esta sección.</p></div>
+          <p class="nv-note">Imagen: Sentinel-2 cloudless 2024 de EOX (uso no comercial, CC BY-NC-SA 4.0). Relieve: Terrain Tiles en AWS Open Data. Senderos y lugares: OpenStreetMap (ODbL). El trazado de Dientes en OpenStreetMap tiene tramos incompletos: es referencial, no sirve para navegar.</p>
         </div>
       </section>
 
@@ -238,6 +332,37 @@
         </div>
       </section>
 
+      <section class="lamina" id="sec-semaforo" data-clave="semaforo" data-tab="Indicadores">
+        <div class="nv-card">
+          <p class="nv-step">Semáforo de indicadores</p>
+          <h2>¿Cómo va el destino frente a sus metas?</h2>
+          <p class="nv-sub">Los indicadores que sigue el Observatorio, leídos en línea desde su planilla maestra. Las metas son propuestas del equipo y están por validar; cuando el equipo las apruebe en la planilla, el panel se actualiza solo. Muchos indicadores aún no tienen dato: se medirán con las encuestas de la temporada.</p>
+          <div data-draw="semaforo"></div>
+        </div>
+      </section>
+
+      <section class="lamina" id="sec-evaluacion" data-clave="evaluacion" data-tab="Evaluación de destino">
+        <div class="nv-card">
+          <p class="nv-step">Evaluación de destino y buenas prácticas</p>
+          <h2>Dónde está más débil el destino y qué han hecho otros</h2>
+          <p class="nv-sub">Resultado de la matriz de evaluación de destino sostenible por ámbito y, para cada indicador débil, buenas prácticas verificadas de otros destinos que podrían adaptarse a Puerto Williams.</p>
+          <div data-draw="evaluacion"></div>
+        </div>
+      </section>
+
+      <section class="lamina" id="sec-asistente" data-clave="asistente" data-tab="Pregúntale al panel">
+        <div class="nv-card">
+          <p class="nv-step">Asistente del panel</p>
+          <h2>Pregúntale al panel</h2>
+          <p class="nv-sub">Escribe una pregunta o elige una de las sugeridas. Este asistente no usa inteligencia artificial: reconoce el tema y responde solo con las cifras de este panel, con su fuente y un enlace al gráfico.</p>
+          <div class="chat">
+            <div class="chat-log" id="chat-log" aria-live="polite"></div>
+            <div class="chat-chips" id="chat-chips"></div>
+            <form class="chat-form" id="chat-form" autocomplete="off"><input type="text" maxlength="200" placeholder="Por ejemplo: ¿cuál es la temporada alta?" aria-label="Tu pregunta"><button type="submit">Preguntar</button></form>
+          </div>
+        </div>
+      </section>
+
       <section class="lamina" id="sec-fuentes" data-clave="fuentes" data-tab="Fuentes y métodos">
         <div class="nv-card">
           <h2>¿Qué tan firme es cada número?</h2>
@@ -259,7 +384,7 @@
   </div>
 
   <footer class="pie">
-    Observatorio de Turismo Sostenible de Puerto Williams. Datos actualizados al 20 de noviembre de 2026 (series mensuales hasta septiembre de 2026; SII hasta 2025). Fuentes en la sección «Fuentes y métodos». Gráficos hechos con D3.js (licencia ISC).
+    Observatorio de Turismo Sostenible de Puerto Williams. Datos actualizados al 20 de noviembre de 2026 (series mensuales hasta septiembre de 2026; SII hasta 2025). Fuentes en la sección «Fuentes y métodos». Gráficos hechos con D3.js (licencia ISC); mapa con MapLibre GL JS (licencia BSD-3). Con conexión, el panel lee los datos en línea desde la planilla del Observatorio.
   </footer>
 </div>
 
@@ -837,6 +962,473 @@ dash.load("sii", [{"anio": 2005, "empresas": 5, "ventas_uf": null, "trabajadores
     el.appendChild(t);
   });
 </script>
+<script>window.SENDEROS = {"dientes":[[[-67.7632,-54.9529],[-67.7617,-54.9515],[-67.76,-54.9513],[-67.7585,-54.9518],[-67.7564,-54.9514],[-67.7544,-54.95],[-67.7523,-54.9494],[-67.7497,-54.9493],[-67.7469,-54.9477],[-67.7441,-54.948],[-67.7402,-54.9467],[-67.7359,-54.9469],[-67.7326,-54.9447],[-67.7283,-54.945],[-67.7244,-54.9462],[-67.72,-54.9463],[-67.7171,-54.9458],[-67.7157,-54.9444],[-67.7136,-54.9444],[-67.7121,-54.9435],[-67.7121,-54.9428],[-67.7085,-54.9422],[-67.7041,-54.9423]],[[-67.6985,-55.0144],[-67.6991,-55.0163],[-67.699,-55.0182],[-67.6999,-55.0191],[-67.7017,-55.0194],[-67.7044,-55.0191],[-67.7051,-55.0198],[-67.7086,-55.0198],[-67.7097,-55.0194],[-67.7149,-55.0206],[-67.7181,-55.02],[-67.7212,-55.0218],[-67.7236,-55.0225],[-67.7263,-55.0216],[-67.7327,-55.0179],[-67.7382,-55.0166],[-67.739,-55.016],[-67.7386,-55.0151],[-67.7426,-55.0133],[-67.7442,-55.0133],[-67.7452,-55.0139],[-67.7468,-55.0136],[-67.7507,-55.015],[-67.7515,-55.0141],[-67.7565,-55.0136],[-67.7612,-55.0118],[-67.7615,-55.0111],[-67.7611,-55.0091],[-67.7618,-55.0063],[-67.7613,-55.0057],[-67.7622,-55.0051],[-67.7617,-55.0045],[-67.7622,-55.0027],[-67.7638,-55.0028],[-67.7689,-55.0006],[-67.7729,-54.9997],[-67.7735,-54.999],[-67.7729,-54.9981],[-67.7738,-54.9976],[-67.7745,-54.9962],[-67.7769,-54.9962],[-67.7804,-54.9953],[-67.7813,-54.9927],[-67.7857,-54.9892],[-67.7849,-54.987],[-67.7892,-54.9868],[-67.7892,-54.9852],[-67.7916,-54.9833],[-67.7907,-54.9828],[-67.793,-54.9817],[-67.7934,-54.9802],[-67.7929,-54.9794],[-67.7934,-54.9787],[-67.7969,-54.9766],[-67.7974,-54.9753],[-67.7964,-54.9748],[-67.7976,-54.9738],[-67.7968,-54.9736],[-67.797,-54.9732],[-67.7954,-54.9713],[-67.7966,-54.9698],[-67.7967,-54.9676],[-67.7923,-54.9669],[-67.7841,-54.9638],[-67.7774,-54.9629],[-67.7752,-54.9632],[-67.774,-54.9627],[-67.7738,-54.9617],[-67.7722,-54.9609],[-67.7745,-54.9581],[-67.774,-54.9572],[-67.7674,-54.9536],[-67.7632,-54.9529]],[[-67.6616,-55.0169],[-67.668,-55.0192],[-67.6728,-55.0178],[-67.6747,-55.0167],[-67.6782,-55.0163],[-67.6814,-55.0169],[-67.6828,-55.0165],[-67.6841,-55.0172],[-67.6877,-55.0176],[-67.6949,-55.0147],[-67.6977,-55.0141],[-67.6985,-55.0144]],[[-67.6616,-55.0169],[-67.6605,-55.016],[-67.6595,-55.0132],[-67.6611,-55.0111],[-67.6623,-55.0072],[-67.6638,-55.0054],[-67.6662,-55.0047],[-67.6701,-55.0043],[-67.6739,-55.0028],[-67.6757,-55.0026],[-67.6776,-55.0015],[-67.6792,-54.999],[-67.6792,-54.9965],[-67.6804,-54.9956],[-67.6808,-54.9947],[-67.6827,-54.9939],[-67.6827,-54.9925],[-67.6791,-54.9912],[-67.6784,-54.9899],[-67.6748,-54.9896],[-67.6743,-54.9886],[-67.6726,-54.9872],[-67.6726,-54.9853],[-67.6687,-54.9831],[-67.6666,-54.9808],[-67.6622,-54.9795],[-67.6526,-54.9749],[-67.6514,-54.9739],[-67.6466,-54.9729],[-67.6458,-54.9721]],[[-67.6458,-54.9721],[-67.6415,-54.9695],[-67.6384,-54.9662],[-67.6365,-54.9627],[-67.634,-54.9614]],[[-67.634,-54.9614],[-67.6325,-54.9603]],[[-67.6401,-54.9482],[-67.6399,-54.9495],[-67.6405,-54.9503],[-67.6396,-54.9512],[-67.6403,-54.9522],[-67.6388,-54.9527],[-67.6386,-54.954],[-67.6351,-54.9544],[-67.6342,-54.9549],[-67.6294,-54.9548],[-67.6303,-54.9554],[-67.6236,-54.9555],[-67.6257,-54.9563],[-67.6255,-54.9568],[-67.627,-54.9576],[-67.6332,-54.9594],[-67.6319,-54.9598],[-67.6325,-54.9603]]],"windhond":[[[-67.618,-55.0727],[-67.6192,-55.0738],[-67.6194,-55.0757],[-67.6184,-55.0786],[-67.617,-55.0805],[-67.6149,-55.0867],[-67.6133,-55.0888],[-67.6135,-55.0913],[-67.613,-55.0938],[-67.6117,-55.0964],[-67.607,-55.0996],[-67.6058,-55.1009],[-67.6064,-55.1018],[-67.6044,-55.1027],[-67.6044,-55.1038],[-67.6067,-55.1046],[-67.6087,-55.1063],[-67.6067,-55.1079]],[[-67.593,-54.944],[-67.5964,-54.9467],[-67.5967,-54.9472],[-67.5961,-54.9475],[-67.5962,-54.9479],[-67.5995,-54.9516],[-67.6,-54.9528],[-67.6025,-54.9543],[-67.6022,-54.9549],[-67.6026,-54.9554],[-67.6038,-54.956],[-67.6052,-54.956],[-67.6054,-54.957],[-67.6068,-54.9579],[-67.608,-54.96]]]};</script>
+<script>// Datos en línea: el panel lee la planilla de Google del Observatorio cada vez que se abre.
+// Si la planilla no responde, se queda con la copia guardada dentro del panel.
+window.VIVO = (function () {
+  const PLANILLA = '1KIf8sg94-SlaDVYMLMFfheVFjpsfFEGwbpY1BG9Kkcc';
+  // pestaña de la planilla → nombre interno del panel
+  const PESTANAS = {
+    config: [717839912, 'config'],
+    mensual: [283698034, 'mensual'],
+    poblacion: [301601183, 'poblacion'],
+    vias_2024_25: [741313488, 'puertas'],
+    trekking: [533691786, 'trekking'],
+    paises: [1149780116, 'paises'],
+    cruceros_temporadas: [557810509, 'temporadas_cruceros'],
+    sii_alojamiento: [1776006324, 'sii'],
+  };
+  const COPIA = '2026-11-20';
+  const estado = { modo: 'cargando', fecha: COPIA, externas: 'cargando', error: '' };
+
+  const url = (id, gid) => 'https://docs.google.com/spreadsheets/d/' + id + '/export?format=csv&gid=' + gid;
+  function celda(v) {
+    if (v == null) return null;
+    const s = String(v).trim();
+    if (s === '') return null;
+    if (/^-?\d+([.,]\d+)?$/.test(s)) return Number(s.replace(',', '.'));
+    return s;
+  }
+  function filas(texto, saltar) {
+    const lineas = texto.replace(/\r/g, '').split('\n');
+    const csv = d3.csvParse(lineas.slice(saltar || 0).join('\n'));
+    const cols = csv.columns.filter((c) => c && c.trim());
+    return csv.map((r) => { const o = {}; cols.forEach((c) => { o[c.trim()] = celda(r[c]); }); return o; })
+      .filter((o) => Object.values(o).some((v) => v != null));
+  }
+  async function traer(id, gid, saltar, ms) {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), ms || 12000);
+    try {
+      const r = await fetch(url(id, gid), { signal: ctrl.signal, cache: 'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const txt = await r.text();
+      if (/^\s*<!DOCTYPE|<html/i.test(txt)) throw new Error('la planilla no es pública');
+      return filas(txt, saltar);
+    } finally { clearTimeout(t); }
+  }
+  function pintarEstado() {
+    const el = document.getElementById('estado-datos');
+    if (!el) return;
+    const f0 = String(estado.fecha || ''); const f = /^\d{4}-\d{2}-\d{2}$/.test(f0) ? f0.split('-').reverse().join('-') : f0;
+    if (estado.modo === 'vivo') { el.textContent = '● Datos en línea · actualizados ' + f; el.className = 'estado vivo'; el.title = 'El panel leyó la planilla del Observatorio al abrirse.'; }
+    else if (estado.modo === 'cargando') { el.textContent = '○ Conectando con la planilla…'; el.className = 'estado'; }
+    else { el.textContent = '○ Copia guardada del ' + f; el.className = 'estado copia'; el.title = 'No se pudo leer la planilla en línea (' + (estado.error || 'sin conexión') + '). Se muestran los datos guardados en el panel.'; }
+  }
+  async function iniciar() {
+    estado.modo = 'cargando'; pintarEstado();
+    try {
+      const nombres = Object.keys(PESTANAS);
+      const res = await Promise.all(nombres.map((n) => traer(PLANILLA, PESTANAS[n][0])));
+      const cfg = {};
+      res[0].forEach((r) => { if (r.clave) cfg[r.clave] = r.valor; });
+      nombres.forEach((n, i) => { if (n !== 'config' && res[i].length) dash.load(PESTANAS[n][1], res[i]); });
+      dash.load('config', [cfg]);
+      estado.modo = 'vivo'; estado.fecha = cfg.fecha_datos ? String(cfg.fecha_datos) : estado.fecha;
+      if (cfg.titulo) document.querySelectorAll('[data-titulo]').forEach((e) => { e.textContent = cfg.titulo; });
+      pintarEstado(); dash.render();
+      // planillas del equipo: indicadores, evaluación de destino y buenas prácticas
+      const verEval = /[?&]equipo\b/.test(location.search) || String(cfg.publicar_evaluacion_destino || '').toUpperCase().startsWith('S');
+      // la evaluación de destino solo se descarga si el equipo autorizó publicarla (o en la vista ?equipo)
+      const ext = verEval ? { kpi: cfg.fuente_kpi, matriz: cfg.fuente_matriz, bp: cfg.fuente_buenas_practicas } : { kpi: cfg.fuente_kpi };
+      await Promise.all(Object.entries(ext).map(async ([k, v]) => {
+        if (!v) return;
+        const [id, gid, saltar] = String(v).split(':');
+        try { dash.load(k, await traer(id, Number(gid || 0), Number(saltar || 0))); } catch (e) { console.warn('fuente ' + k, e); }
+      }));
+      estado.externas = 'ok'; dash.render();
+    } catch (e) {
+      estado.modo = 'copia'; estado.error = e.name === 'AbortError' ? 'tiempo de espera agotado' : e.message; estado.externas = 'sin conexión';
+      pintarEstado();
+    }
+    dash.render();
+  }
+  return { estado, iniciar, pintarEstado, COPIA };
+})();
+</script>
+<script>// Semáforo de indicadores (planilla maestra de KPI) y evaluación de destino con buenas prácticas.
+window.SEM = (function () {
+  const EQUIPO = new URLSearchParams(location.search).has('equipo');
+  const SECCION = { 5: 'trekking', 6: 'trekking', 7: 'presion', 15: 'mapa' };
+  const COLOR = {
+    'cumple': ['ok', 'Cumple'], 'no cumple': ['bad', 'No cumple'], 'sin dato': ['nd', 'Sin dato aún'],
+    'meta por definir': ['md', 'Meta por definir'], 'seguimiento': ['seg', 'Seguimiento'], 'no aplica': ['nd', 'No aplica'],
+  };
+  const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+  const k = (r, nombre) => { const key = Object.keys(r).find((c) => c.toLowerCase().startsWith(nombre.toLowerCase())); return key ? r[key] : null; };
+  const publicarEval = () => {
+    const c = dash.data('config').data[0] || {};
+    return EQUIPO || String(c.publicar_evaluacion_destino || '').toUpperCase().startsWith('S');
+  };
+  function espera(cont, texto) { cont.replaceChildren(el('p', 'nv-note', texto)); }
+
+  dash.draw('semaforo', (cont) => {
+    const d = dash.data('kpi');
+    if (d.status !== 'ok' || !d.data.length) {
+      espera(cont, VIVO.estado.modo === 'copia' ? 'El semáforo se lee en línea desde la planilla de indicadores; sin conexión no se puede mostrar.' : 'Cargando los indicadores…');
+      return;
+    }
+    const rows = d.data.filter((r) => r['#'] != null && k(r, 'Indicador'));
+    const cuenta = {};
+    rows.forEach((r) => { const e = String(k(r, 'Estado') || 'sin dato').toLowerCase(); cuenta[e] = (cuenta[e] || 0) + 1; });
+    const res = el('div', 'sem-resumen');
+    Object.entries(COLOR).forEach(([e, [c, t]]) => { if (cuenta[e]) { const s = el('span', 'sem-chip ' + c); s.textContent = cuenta[e] + ' · ' + t; res.appendChild(s); } });
+    const grid = el('div', 'sem-grid');
+    rows.forEach((r) => {
+      const est = String(k(r, 'Estado') || 'sin dato').toLowerCase();
+      const [c, t] = COLOR[est] || ['nd', k(r, 'Estado') || 'Sin dato'];
+      const card = el('article', 'sem-card ' + c);
+      card.id = 'kpi-' + r['#'];
+      const top = el('div', 'sem-top');
+      top.append(el('span', 'sem-num', '#' + r['#']), el('span', 'sem-chip ' + c, t));
+      card.append(top, el('h3', null, k(r, 'Indicador')));
+      const pub = String(k(r, 'Publicable') || '').toLowerCase();
+      const val = k(r, 'Valor medido');
+      if (val != null && pub.startsWith('sí')) {
+        const v = el('p', 'sem-valor'); v.append(el('b', 'nv-num', typeof val === 'number' ? NV.fmt(val, val % 1 ? 1 : 0) : String(val)), ' ' + (k(r, 'Unidad') || ''));
+        card.appendChild(v);
+      }
+      const meta = String(k(r, 'Meta propuesta') || '').replace(/\s*\(propuesta por validar[^)]*\)/i, '').trim();
+      card.appendChild(el('p', 'sem-meta', meta ? 'Meta propuesta, por validar: ' + meta : 'Meta por definir'));
+      card.appendChild(el('p', 'sem-det', (k(r, 'KPI') || '')));
+      const pie = el('p', 'sem-pie', 'Fuente: ' + (k(r, 'Fuente') || '—') + ' · ' + (k(r, 'Frecuencia') || ''));
+      card.appendChild(pie);
+      const sec = SECCION[r['#']];
+      if (sec) { const a = el('a', 'sem-link', sec === 'mapa' ? 'Ver en el mapa 3D →' : 'Ver datos →'); a.href = '#' + sec; card.appendChild(a); }
+      grid.appendChild(card);
+    });
+    cont.replaceChildren(res, grid);
+  });
+
+  dash.draw('evaluacion', (cont) => {
+    if (!publicarEval()) {
+      espera(cont, 'Los resultados de la evaluación de destino están en revisión por el equipo local del Observatorio. Se publicarán aquí, junto con sus buenas prácticas, cuando el equipo lo autorice.');
+      return;
+    }
+    const m = dash.data('matriz'), b = dash.data('bp');
+    if (m.status !== 'ok' || !m.data.length) { espera(cont, VIVO.estado.modo === 'copia' ? 'La evaluación se lee en línea; sin conexión no se puede mostrar.' : 'Cargando la evaluación…'); return; }
+    const filas = m.data.filter((r) => r['Código'] != null && k(r, 'Ámbito'));
+    const bps = (b.data || []).filter((p) => p['Código'] != null && (EQUIPO || String(k(p, 'Revisión') || '').toLowerCase() === 'aprobada'));
+    const porCod = d3.group(bps, (p) => String(p['Código']));
+    const frag = document.createDocumentFragment();
+    if (EQUIPO) frag.appendChild(el('p', 'sem-aviso', 'Vista del equipo: incluye resultados y buenas prácticas que aún no están publicados.'));
+    const amb = d3.rollups(filas, (v) => ({ n: v.length, resp: v.filter((r) => k(r, 'Puntaje') != null).length, pts: d3.sum(v, (r) => Number(k(r, 'Puntaje')) || 0) }), (r) => k(r, 'Ámbito'));
+    const barras = el('div', 'ev-barras');
+    amb.forEach(([a, s]) => {
+      const pct = s.n ? s.pts / (3 * s.n) : 0;
+      const fila = el('div', 'ev-fila');
+      const lab = el('span', 'ev-lab', a);
+      const bar = el('span', 'ev-bar'); const fill = el('span', 'ev-fill'); fill.style.width = Math.max(1, pct * 100) + '%'; bar.appendChild(fill);
+      fila.append(lab, bar, el('span', 'ev-pct nv-num', NV.fmt(pct * 100, 1) + '%'));
+      barras.appendChild(fila);
+    });
+    frag.appendChild(barras);
+    frag.appendChild(el('p', 'nv-note', 'Cumplimiento = puntos obtenidos sobre el máximo posible (3 por indicador). Abajo, los indicadores con puntaje 0 o 1 y las buenas prácticas que pueden ayudar a mejorarlos.'));
+    amb.forEach(([a]) => {
+      const bajos = filas.filter((r) => k(r, 'Ámbito') === a && Number(k(r, 'Puntaje')) <= 1);
+      if (!bajos.length) return;
+      const det = el('details', 'ev-amb');
+      det.appendChild(el('summary', null, a + ' · ' + bajos.length + ' indicadores por mejorar'));
+      bajos.forEach((r) => {
+        const it = el('div', 'ev-ind');
+        const pts = Number(k(r, 'Puntaje')) || 0;
+        const h = el('p', 'ev-tit'); h.append(el('b', null, String(r['Código']) + ' '), k(r, 'Indicador adaptado') || '', el('span', 'ev-pts', ' · puntaje ' + pts + ' de 3'));
+        it.appendChild(h);
+        (porCod.get(String(r['Código'])) || []).forEach((p) => {
+          const bp = el('div', 'ev-bp');
+          const t = el('p', 'ev-bp-t'); t.append(el('b', null, k(p, 'Buena práctica') || ''), ' — ' + [k(p, 'Institución'), k(p, 'Comuna')].filter(Boolean).join(', '));
+          bp.appendChild(t);
+          if (k(p, 'Aplicación')) bp.appendChild(el('p', 'ev-bp-a', 'En Puerto Williams: ' + k(p, 'Aplicación')));
+          const f = k(p, 'Fuente');
+          if (f && /^https?:\/\//.test(String(f).trim())) { const a2 = el('a', 'sem-link', 'Fuente'); a2.href = String(f).trim(); a2.target = '_blank'; a2.rel = 'noopener'; bp.appendChild(a2); }
+          if (EQUIPO) bp.appendChild(el('span', 'sem-chip nd', 'Revisión: ' + (k(p, 'Revisión') || '—')));
+          it.appendChild(bp);
+        });
+        det.appendChild(it);
+      });
+      frag.appendChild(det);
+    });
+    cont.replaceChildren(frag);
+  });
+
+  return { EQUIPO, publicarEval };
+})();
+</script>
+<script>// Asistente guiado del panel (etapa 1, sin IA): reconoce la pregunta por palabras clave y
+// responde con las cifras exactas del panel, su fuente y un enlace a la sección.
+// La etapa 2 (IA real) usará la misma interfaz: solo cambia la función responder().
+window.ASIS = (function () {
+  const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const d = (id) => dash.data(id).data || [];
+  const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  const kp = () => d('kpis')[0] || {};
+
+  const TEMAS = [
+    { id: 'presion', claves: ['residente', 'presion', 'por habitante', 'cuantos visitantes', 'cuantos turistas', 'visitantes llegan', 'turistas llegan', 'carga'],
+      sugerencia: '¿Cuántos visitantes hay por residente?',
+      fn: () => {
+        const k = kp();
+        return { txt: [`En la temporada 2024-25 llegaron unos ${NV.fmt(k.visitantes_estimados)} visitantes a Puerto Williams por todas las vías, frente a ${NV.fmt(k.poblacion)} habitantes: ≈ ${NV.fmt(k.visitantes_por_residente, 1)} visitantes por residente.`,
+          'El ferry es lo medido mes a mes; avión y paso desde Ushuaia se estiman con los totales de la Municipalidad, así que la cifra es una estimación.'],
+          fuente: 'TABSA vía Subsecretaría de Transportes; Municipalidad de Cabo de Hornos (DAP y PDI); INE, Censo 2024.', sec: 'presion' };
+      } },
+    { id: 'temporada', claves: ['temporada alta', 'que meses', 'cuando', 'mes con mas', 'meses con mas', 'peak', 'estacional', 'concentra', 'mejor mes'],
+      sugerencia: '¿Cuál es la temporada alta?',
+      fn: () => {
+        const filas = d('mensual').filter((r) => r.temporada === '2024-2025' && r.ferry_no_residentes != null);
+        const top = filas.slice().sort((a, b) => b.ferry_no_residentes - a.ferry_no_residentes).slice(0, 3);
+        const k = kp();
+        return { txt: [`En 2024-25 los meses con más visitantes en ferry fueron ${top.map((r) => MESES[r.mes - 1] + ' (' + NV.fmt(r.ferry_no_residentes) + ')').join(', ')}.`,
+          `En Dientes de Navarino ${NV.fmt(k.meses80_dientes)} meses concentran el 80% de los excursionistas de la temporada; en las llegadas a alojamiento de todo Magallanes hacen falta ${NV.fmt(k.meses80_ine)}.`],
+          fuente: 'TABSA; Carabineros, 4ª Comisaría Puerto Williams; INE, Encuesta Mensual de Alojamiento Turístico.', sec: 'estacionalidad' };
+      } },
+    { id: 'paises', claves: ['pais', 'paises', 'origen', 'nacionalidad', 'extranjero', 'de donde', 'aleman', 'estadounidense', 'frances'],
+      sugerencia: '¿De qué países vienen?',
+      fn: () => {
+        const p = d('paises').filter((r) => r.pais !== 'Chile');
+        const top = (c) => { const t = d3.sum(p, (r) => Number(r[c])); return p.slice().sort((a, b) => b[c] - a[c]).slice(0, 4).map((r) => r.pais + ' ' + NV.fmt(100 * r[c] / t) + '%').join(', '); };
+        return { txt: ['Sin contar Chile:', `• Oficina de Información Turística (2024): ${top('oit_atenciones')}.`, `• Excursionistas de Dientes de Navarino (2025-26): ${top('dientes_turistas')}.`,
+          'Son años y registros distintos: sirven para comparar perfiles, no para sumarlos.'],
+          fuente: 'Municipalidad de Cabo de Hornos (Oficina de Información Turística); Carabineros.', sec: 'origenes' };
+      } },
+    { id: 'cruceros', claves: ['crucero', 'cruceros', 'recalada', 'barco', 'antartic', 'expedicion'],
+      sugerencia: '¿Cuántos cruceros llegan?',
+      fn: () => {
+        const k = kp();
+        const t = d('temporadas_cruceros');
+        const suma = (temp) => d3.sum(t.filter((r) => r.temporada === temp), (r) => Number(r.recaladas) || 0);
+        const temps = Array.from(new Set(t.map((r) => r.temporada))).sort();
+        const ult = temps[temps.length - 1];
+        return { txt: [`En 2024-25 hubo ${NV.fmt(k.cruceros_pasajeros)} pasajeros de cruceros, ${NV.fmt(k.cruceros_veces, 1)} veces los de 2018-19.`,
+          `Recaladas por temporada: ${temps.map((x) => x + ': ' + NV.fmt(suma(x))).join(' · ')}${ult ? ' (la ' + ult + ' es la programación, sujeta a cambios)' : ''}.`],
+          fuente: 'EPAustral (Empresa Portuaria Austral).', sec: 'cruceros' };
+      } },
+    { id: 'region', claves: ['magallanes', 'region', 'regional', 'pandemia', 'recupera', 'comparar', 'contraste', 'crece'],
+      sugerencia: '¿Cómo se compara con el resto de Magallanes?',
+      fn: () => {
+        const k = kp();
+        return { txt: [`Frente a 2018-19 (antes de la pandemia), los visitantes en ferry a Puerto Williams cambiaron ${NV.pct(k.ferry_var)} en 2024-25, mientras las llegadas a alojamiento turístico de toda la Región de Magallanes cambiaron ${NV.pct(k.ine_var)}.`],
+          fuente: 'TABSA; INE, Encuesta Mensual de Alojamiento Turístico.', sec: 'contraste' };
+      } },
+    { id: 'trekking', claves: ['trekking', 'dientes', 'excursion', 'sendero', 'caminar', 'circuito', 'mochilero'],
+      sugerencia: '¿Cuántas personas hacen el trekking de Dientes?',
+      fn: () => {
+        const t = d('trekking');
+        const dien = t.filter((r) => r.temporada).sort((a, b) => a.anio - b.anio);
+        const isla = t.filter((r) => !r.temporada).sort((a, b) => a.anio - b.anio);
+        const ul = dien[dien.length - 1] || {}, pe = dien[dien.length - 2] || {};
+        const i0 = isla[0] || {}, i1 = isla[isla.length - 1] || {};
+        return { txt: [`Circuito Dientes de Navarino: ${NV.fmt(pe.valor)} excursionistas en ${pe.temporada} y ${NV.fmt(ul.valor)} en ${ul.temporada}${ul.estado && ul.estado !== 'validado' ? ' (cifra ' + ul.estado + ': los meses no suman el total informado)' : ''}.`,
+          `En toda la isla, Carabineros registró ${NV.fmt(i0.valor)} excursionistas en ${i0.anio} y ${NV.fmt(i1.valor)} en ${i1.anio}.`],
+          fuente: 'Carabineros de Chile, 4ª Comisaría Puerto Williams.', sec: 'trekking' };
+      } },
+    { id: 'economia', claves: ['venta', 'ventas', 'uf', 'empresa', 'empresas', 'sii', 'economia', 'trabajador', 'empleo', 'restaurant', 'hotel', 'negocio'],
+      sugerencia: '¿Cuánto venden las empresas de turismo?',
+      fn: () => {
+        const s = d('sii').filter((r) => r.ventas_uf != null).sort((a, b) => a.anio - b.anio);
+        const u = s[s.length - 1] || {}, a = s[s.length - 2] || {}, b = s.find((r) => r.anio === 2018) || {};
+        return { txt: [`En ${u.anio}, ${NV.fmt(u.empresas)} empresas de alojamiento y servicio de comidas con domicilio en Cabo de Hornos vendieron ${NV.fmt(u.ventas_uf)} UF, con ${NV.fmt(u.trabajadores)} trabajadores informados.`,
+          `En ${a.anio} fueron ${NV.fmt(a.ventas_uf)} UF y en 2018, ${NV.fmt(b.ventas_uf)} UF. El salto de ${u.anio} es preliminar y está por confirmar.`,
+          'Ojo: el SII cuenta a cada empresa en la comuna de su casa matriz, y el rubro incluye restaurantes que atienden también a residentes.'],
+          fuente: 'SII, Estadísticas de Empresas por Comuna y Rubro económico (actualización de octubre de 2026).', sec: 'economia' };
+      } },
+    { id: 'vias', claves: ['avion', 'vuelo', 'aereo', 'ferry', 'ushuaia', 'via', 'vias', 'como llegar', 'transporte', 'puerta'],
+      sugerencia: '¿Por dónde llegan los visitantes?',
+      fn: () => {
+        const p = d('puertas'); const t = d3.sum(p, (r) => Number(r.llegadas));
+        return { txt: ['Llegadas entre octubre de 2024 y marzo de 2025:', ...p.map((r) => `• ${r.via}: ${NV.fmt(r.llegadas)} (${NV.fmt(100 * r.llegadas / t)}%)${r.estado !== 'validado' ? ' — ' + r.estado : ''}`),
+          'Incluyen residentes que viajan; solo el ferry tiene datos mes a mes.'],
+          fuente: 'Municipalidad de Cabo de Hornos (aéreo: DAP; paso desde Ushuaia: PDI; ferry: TABSA).', sec: 'presion' };
+      } },
+    { id: 'poblacion', claves: ['poblacion', 'habitantes', 'censo', 'vive', 'viven'],
+      sugerencia: '¿Cuántas personas viven en la comuna?',
+      fn: () => {
+        const p = d('poblacion').slice().sort((a, b) => a.anio - b.anio);
+        return { txt: [p.map((r) => `${r.anio}: ${NV.fmt(r.poblacion)} habitantes`).join(' · ') + ' (comuna de Cabo de Hornos).', 'Puerto Williams tiene además población flotante de la Armada que el Censo no refleja del todo.'],
+          fuente: 'INE, Censos 2017 y 2024 (vía BCN).', sec: 'presion' };
+      } },
+    { id: 'semaforo', claves: ['indicador', 'indicadores', 'semaforo', 'meta', 'metas', 'kpi', 'cumple'],
+      sugerencia: '¿Cómo van los indicadores?',
+      fn: () => {
+        const k = d('kpi').filter((r) => r['#'] != null);
+        if (!k.length) return { txt: ['El semáforo se lee en línea desde la planilla de indicadores del Observatorio y ahora no está disponible. Prueba de nuevo en un momento.'], sec: 'semaforo' };
+        const c = d3.rollups(k, (v) => v.length, (r) => String(Object.entries(r).find(([c]) => /^estado/i.test(c))?.[1] || 'sin dato').toLowerCase());
+        return { txt: [`El Observatorio sigue ${k.length} indicadores: ${c.map(([e, n]) => n + ' ' + e).join(', ')}.`, 'Las metas son propuestas del equipo y están por validar.'],
+          fuente: 'Planilla maestra de indicadores del Observatorio.', sec: 'semaforo' };
+      } },
+    { id: 'calidad', claves: ['calidad', 'confiable', 'confiar', 'error', 'dudoso', 'por confirmar', 'inconsistente', 'metodo', 'fuente', 'fuentes'],
+      sugerencia: '¿Qué tan confiables son los datos?',
+      fn: () => {
+        const c = d('calidad');
+        return { txt: ['Meses por estado en cada serie:', ...c.map((r) => `• ${r.fuente}: ${NV.fmt(r.validado)} validados, ${NV.fmt(r.por_confirmar)} por confirmar, ${NV.fmt(r.inconsistente)} inconsistentes`),
+          'Ninguna cifra se corrigió: lo dudoso se muestra tal cual y marcado. El botón «Ver calidad del dato» lo resalta en los gráficos.'],
+          fuente: 'Planillas normalizadas del Observatorio.', sec: 'fuentes' };
+      } },
+    { id: 'mapa', claves: ['mapa', 'donde queda', 'ubicacion', '3d', 'relieve', 'satelit'],
+      sugerencia: 'Muéstrame la isla en 3D',
+      fn: () => ({ txt: ['En la sección «Mapa 3D» puedes recorrer Isla Navarino con su relieve real y la imagen satelital Sentinel-2: el circuito Dientes de Navarino, el sendero a Lago Windhond y los lugares con sus datos. Usa «Sobrevolar la isla» para un recorrido automático.'], sec: 'mapa' }) },
+  ];
+
+  function responder(pregunta) {
+    const q = norm(pregunta);
+    let mejor = null, pts = 0;
+    TEMAS.forEach((t) => { const p = t.claves.reduce((s, c) => s + (q.includes(norm(c)) ? c.length : 0), 0); if (p > pts) { pts = p; mejor = t; } });
+    if (!mejor) return { txt: ['Todavía no sé responder eso: soy un asistente guiado que solo usa las cifras de este panel, sin inteligencia artificial.', 'Puedo contarte sobre visitantes por residente, temporada alta, países de origen, cruceros, el contraste con Magallanes, trekking, ventas del turismo (SII), vías de llegada, población, indicadores y calidad de los datos.'], ayuda: true };
+    try { return mejor.fn(); } catch (e) { console.error('asistente', e); return { txt: ['No pude calcular esa respuesta con los datos cargados.'] }; }
+  }
+
+  const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+  function burbuja(log, quien, r) {
+    const b = el('div', 'chat-msg ' + quien);
+    if (typeof r === 'string') b.appendChild(el('p', null, r));
+    else {
+      r.txt.forEach((t) => b.appendChild(el('p', null, t)));
+      if (r.fuente) b.appendChild(el('p', 'chat-fuente', 'Fuente: ' + r.fuente));
+      if (r.sec) { const a = el('a', 'sem-link', 'Ver en el panel →'); a.href = '#' + r.sec; b.appendChild(a); }
+    }
+    log.appendChild(b);
+    log.scrollTop = log.scrollHeight;
+  }
+  function preguntar(texto) {
+    const log = document.getElementById('chat-log');
+    if (!log || !texto.trim()) return;
+    burbuja(log, 'yo', texto.trim());
+    burbuja(log, 'h', responder(texto));
+    if (typeof window.ajustarAltura === 'function') window.ajustarAltura();
+  }
+  function montar() {
+    const chips = document.getElementById('chat-chips');
+    const form = document.getElementById('chat-form');
+    if (!chips || !form) return;
+    TEMAS.forEach((t) => { const b = el('button', 'nv-btn', t.sugerencia); b.type = 'button'; b.addEventListener('click', () => preguntar(t.sugerencia)); chips.appendChild(b); });
+    form.addEventListener('submit', (e) => { e.preventDefault(); const i = form.querySelector('input'); preguntar(i.value); i.value = ''; });
+    burbuja(document.getElementById('chat-log'), 'h', { txt: ['Hola. Pregúntame por los datos del panel o elige una pregunta. Respondo con las cifras exactas y su fuente.'] });
+  }
+  return { responder, preguntar, montar, TEMAS };
+})();
+</script>
+<script>// Mapa 3D de Isla Navarino: relieve real + imagen satelital, senderos y lugares con datos del panel.
+// MapLibre GL se carga solo cuando se abre esta sección (no pesa en la primera carga del panel).
+window.MAPA = (function () {
+  let mapa = null, cargando = false, vuelo = null;
+  const LUGARES = [
+    { id: 'pw', n: 'Puerto Williams', c: [-67.60625, -54.93577], t: 'Capital de la comuna de Cabo de Hornos.', dato: () => {
+      const p = (dash.data('poblacion').data.find((r) => Number(r.anio) === 2024) || {}).poblacion;
+      const k = (dash.data('kpis').data[0] || {});
+      return [p ? NV.fmt(p) + ' habitantes (Censo 2024)' : null, k.visitantes_estimados ? '≈ ' + NV.fmt(k.visitantes_estimados) + ' visitantes estimados en la temporada 2024-25' : null];
+    }, sec: 'presion' },
+    { id: 'aer', n: 'Aeródromo Guardiamarina Zañartu', c: [-67.62647, -54.93119], t: 'Vuelos desde Punta Arenas.', dato: () => {
+      const v = dash.data('puertas').data.find((r) => /aéreo/i.test(r.via)); return [v ? NV.fmt(v.llegadas) + ' llegadas por vía aérea (oct-2024 a mar-2025, Municipalidad)' : null]; }, sec: 'presion' },
+    { id: 'museo', n: 'Museo Territorial Yagan Usi', c: [-67.61474, -54.93565], t: 'Museo de Puerto Williams (Serpat).', dato: () => [], sec: null },
+    { id: 'bandera', n: 'Mirador Cerro La Bandera', c: [-67.63237, -54.96032], t: 'Inicio del circuito Dientes de Navarino y mirador sobre el canal Beagle.', dato: () => [], sec: 'trekking' },
+    { id: 'omora', n: 'Parque Etnobotánico Omora', c: [-67.66634, -54.95893], t: 'Parque de investigación y educación ambiental.', dato: () => [], sec: null },
+    { id: 'dientes', n: 'Dientes de Navarino', c: [-67.66379, -55.00546], t: 'Circuito de trekking de varios días.', dato: () => {
+      const t = dash.data('trekking').data.filter((r) => r.temporada).slice(-2);
+      return t.map((r) => NV.fmt(r.valor) + ' excursionistas en ' + r.temporada + (r.estado && r.estado !== 'validado' ? ' (' + r.estado + ')' : '') + ' · Carabineros');
+    }, sec: 'trekking' },
+    { id: 'windhond', n: 'Lago Windhond', c: [-67.58501, -55.13528], t: 'Destino de trekking al sur de la isla.', dato: () => [], sec: null },
+    { id: 'wulaia', n: 'Bahía Wulaia', c: [-68.14991, -55.04778], t: 'Sitio histórico y arqueológico en la costa oeste.', dato: () => [], sec: null },
+    { id: 'navarino', n: 'Puerto Navarino', c: [-68.32401, -54.92593], t: 'Paso desde Ushuaia (Argentina).', dato: () => {
+      const v = dash.data('puertas').data.find((r) => /ushuaia/i.test(r.via)); return [v ? NV.fmt(v.llegadas) + ' llegadas por el paso desde Ushuaia (oct-2024 a mar-2025, Municipalidad)' : null]; }, sec: 'presion' },
+    { id: 'toro', n: 'Puerto Toro', c: [-67.07583, -55.08301], t: 'Caleta al este de la isla.', dato: () => [], sec: null },
+  ];
+  const VISTAS = {
+    general: { center: [-67.75, -55.0], zoom: 9.3, pitch: 55, bearing: -15 },
+    pw: { center: [-67.615, -54.94], zoom: 13.2, pitch: 65, bearing: 160 },
+    dientes: { center: [-67.70, -54.995], zoom: 11.6, pitch: 70, bearing: 200 },
+  };
+  const ATR = [
+    '<a href="https://s2maps.eu" target="_blank" rel="noopener">Sentinel-2 cloudless - https://s2maps.eu</a> by <a href="https://eox.at" target="_blank" rel="noopener">EOX IT Services GmbH</a> (Contains modified Copernicus Sentinel data 2024)',
+    'Relieve: <a href="https://registry.opendata.aws/terrain-tiles/" target="_blank" rel="noopener">Terrain Tiles (AWS Open Data)</a>, <a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md" target="_blank" rel="noopener">Joerd/Mapzen</a>',
+    'Senderos y lugares: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">colaboradores de OpenStreetMap</a>',
+  ];
+
+  function cargarLib() {
+    return new Promise((ok, mal) => {
+      if (window.maplibregl) return ok();
+      const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = 'maplibre-gl.css'; document.head.appendChild(css);
+      const s = document.createElement('script'); s.src = 'maplibre-gl.js'; s.onload = () => ok(); s.onerror = () => mal(new Error('no se pudo cargar la librería del mapa'));
+      document.head.appendChild(s);
+    });
+  }
+  function aviso(t) { const a = document.getElementById('mapa-aviso'); if (a) { a.textContent = t; a.hidden = !t; } }
+  function popup(l) {
+    const box = document.createElement('div'); box.className = 'mapa-pop';
+    const h = document.createElement('strong'); h.textContent = l.n; box.appendChild(h);
+    const p = document.createElement('p'); p.textContent = l.t; box.appendChild(p);
+    (l.dato() || []).filter(Boolean).forEach((x) => { const q = document.createElement('p'); q.className = 'dato'; q.textContent = x; box.appendChild(q); });
+    if (l.sec) { const a = document.createElement('a'); a.href = '#' + l.sec; a.textContent = 'Ver datos →'; box.appendChild(a); }
+    return box;
+  }
+  function parar() { if (vuelo) { clearTimeout(vuelo); vuelo = null; } }
+  function sobrevuelo() {
+    parar();
+    const ruta = [VISTAS.general, { center: [-67.63, -54.96], zoom: 12.6, pitch: 70, bearing: 190 }, VISTAS.dientes,
+      { center: [-67.60, -55.10], zoom: 11.5, pitch: 65, bearing: 120 }, { center: [-68.15, -55.04], zoom: 11.5, pitch: 60, bearing: 60 }, VISTAS.pw];
+    let i = 0;
+    const paso = () => { if (!mapa || i >= ruta.length) return; mapa.flyTo({ ...ruta[i], duration: 6000, essential: true }); i += 1; vuelo = setTimeout(paso, 6500); };
+    paso();
+  }
+  async function iniciar() {
+    if (mapa || cargando) return;
+    const cont = document.getElementById('mapa3d');
+    if (!cont) return;
+    cargando = true; aviso('Cargando el mapa…');
+    try {
+      await cargarLib();
+      if (!maplibregl.supported || (maplibregl.supported && !maplibregl.supported())) { /* versiones nuevas no exponen supported() */ }
+      const sen = window.SENDEROS || { dientes: [], windhond: [] };
+      mapa = new maplibregl.Map({
+        container: cont, attributionControl: false, maxPitch: 80,
+        style: {
+          version: 8,
+          sources: {
+            sat: { type: 'raster', tiles: ['https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2024_3857/default/g/{z}/{y}/{x}.jpg'], tileSize: 256, maxzoom: 14 },
+            dem: { type: 'raster-dem', tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'], tileSize: 256, maxzoom: 13, encoding: 'terrarium' },
+            sen: { type: 'geojson', data: { type: 'FeatureCollection', features: [
+              { type: 'Feature', properties: { n: 'Circuito Dientes de Navarino' }, geometry: { type: 'MultiLineString', coordinates: sen.dientes } },
+              { type: 'Feature', properties: { n: 'Sendero a Lago Windhond' }, geometry: { type: 'MultiLineString', coordinates: sen.windhond } } ] } },
+          },
+          layers: [
+            { id: 'sat', type: 'raster', source: 'sat' },
+            { id: 'sen-borde', type: 'line', source: 'sen', paint: { 'line-color': '#ffffff', 'line-width': 5, 'line-opacity': 0.7 } },
+            { id: 'sen', type: 'line', source: 'sen', paint: { 'line-color': '#e0502f', 'line-width': 2.6 } },
+          ],
+          terrain: { source: 'dem', exaggeration: 1.5 },
+          sky: { 'sky-color': '#9fc6e8', 'horizon-color': '#dfe8ef', 'fog-color': '#e6edf2', 'sky-horizon-blend': 0.6, 'horizon-fog-blend': 0.4, 'fog-ground-blend': 0.6 },
+        },
+        ...VISTAS.general,
+      });
+      mapa.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'top-right');
+      mapa.addControl(new maplibregl.AttributionControl({ compact: true, customAttribution: ATR }), 'bottom-right');
+      mapa.on('error', (e) => { console.warn('mapa', e && e.error); });
+      ['mousedown', 'touchstart', 'wheel'].forEach((ev) => mapa.on(ev, parar));
+      LUGARES.forEach((l) => {
+        const m = document.createElement('button'); m.type = 'button'; m.className = 'mapa-pin' + (['museo', 'omora', 'aer', 'bandera', 'toro'].includes(l.id) ? ' menor' : ''); m.setAttribute('aria-label', l.n);
+        const lab = document.createElement('span'); lab.textContent = l.n; m.appendChild(lab);
+        new maplibregl.Marker({ element: m, anchor: 'bottom' }).setLngLat(l.c)
+          .setPopup(new maplibregl.Popup({ offset: 18, maxWidth: '280px' }).setDOMContent(document.createElement('div')))
+          .addTo(mapa).getPopup().on('open', function () { this.setDOMContent(popup(l)); });
+      });
+      const caja = cont.parentElement; const lejos = () => caja.classList.toggle('lejos', mapa.getZoom() < 12); lejos(); mapa.on('zoom', lejos);
+      mapa.on('load', () => aviso(''));
+      setTimeout(() => { if (mapa && !mapa.loaded()) aviso('Cargando relieve e imagen satelital… con conexión lenta puede tardar.'); }, 5000);
+    } catch (e) {
+      aviso('No se pudo abrir el mapa 3D en este dispositivo (' + e.message + ').');
+      mapa = null;
+    } finally { cargando = false; }
+  }
+  function ir(v) { parar(); if (mapa && VISTAS[v]) mapa.flyTo({ ...VISTAS[v], duration: 3500, essential: true }); }
+  function plano() { if (!mapa) return; parar(); const p = mapa.getPitch() > 5; mapa.easeTo({ pitch: p ? 0 : 60, duration: 1200 }); mapa.setTerrain(p ? null : { source: 'dem', exaggeration: 1.5 }); }
+  document.addEventListener('seccion', (e) => { if (e.detail === 'mapa') { iniciar(); if (mapa) setTimeout(() => mapa.resize(), 400); } });
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-mapa]'); if (!b) return;
+    const a = b.dataset.mapa;
+    if (a === 'vuelo') sobrevuelo(); else if (a === 'plano') plano(); else ir(a);
+  });
+  return { iniciar, LUGARES };
+})();
+</script>
 <script>
   // ===================== controles =====================
   document.getElementById('btn-calidad').addEventListener('click', () => dash.setParams({ calidad: !NV.params().calidad }));
@@ -873,6 +1465,29 @@ dash.load("sii", [{"anio": 2005, "empresas": 5, "ventas_uf": null, "trabajadores
     tabs.appendChild(b);
   });
   function ajustarAltura() { const l = laminas[actual]; if (l) visor.style.height = l.offsetHeight + 'px'; }
+  window.ajustarAltura = ajustarAltura;
+  // ===================== puertas por perfil =====================
+  const RUTAS = {
+    emprendedor: ['Emprendo en turismo', ['resumen', 'estacionalidad', 'origenes', 'cruceros', 'economia', 'mapa', 'asistente']],
+    municipio: ['Planifico el destino', ['resumen', 'presion', 'contraste', 'estacionalidad', 'semaforo', 'evaluacion', 'fuentes']],
+    comunidad: ['Vivo en Navarino', ['resumen', 'presion', 'trekking', 'mapa', 'semaforo', 'asistente']],
+  };
+  let ruta = null;
+  const enRuta = (i) => !ruta || RUTAS[ruta][1].includes(laminas[i].dataset.clave);
+  function ponerRuta(r, saltar) {
+    ruta = RUTAS[r] ? r : null;
+    tabs.querySelectorAll('.tab').forEach((t, j) => t.classList.toggle('fuera', !enRuta(j)));
+    const b = document.getElementById('ruta');
+    b.hidden = !ruta;
+    if (ruta) document.getElementById('ruta-txt').textContent = 'Recorrido: ' + RUTAS[ruta][0] + ' · ' + RUTAS[ruta][1].length + ' secciones';
+    const u = new URL(location.href); if (ruta) u.searchParams.set('perfil', ruta); else u.searchParams.delete('perfil');
+    history.replaceState(null, '', u.pathname + u.search + location.hash);
+    if (ruta && saltar) ir(laminas.map((l, j) => j).filter(enRuta)[1]);
+    else ir(actual, true);
+  }
+  function paso(dir) { let i = actual + dir; while (i >= 0 && i < laminas.length && !enRuta(i)) i += dir; if (i >= 0 && i < laminas.length) ir(i); }
+  document.querySelectorAll('[data-perfil]').forEach((b) => b.addEventListener('click', () => ponerRuta(b.dataset.perfil, true)));
+  document.getElementById('ruta-salir').addEventListener('click', () => ponerRuta(null));
   function ir(i, desdeHash) {
     actual = Math.max(0, Math.min(laminas.length - 1, i));
     pista.style.transform = 'translateX(' + (-100 * actual) + '%)';
@@ -880,24 +1495,28 @@ dash.load("sii", [{"anio": 2005, "empresas": 5, "ventas_uf": null, "trabajadores
     tabs.querySelectorAll('.tab').forEach((t, j) => { t.setAttribute('aria-selected', String(j === actual)); t.tabIndex = j === actual ? 0 : -1; });
     const t = tabs.children[actual]; if (t && t.scrollIntoView) t.scrollIntoView({ block: 'nearest', inline: 'nearest' });
     document.getElementById('contador').textContent = (actual + 1) + ' de ' + laminas.length;
-    document.getElementById('ant').disabled = actual === 0;
-    document.getElementById('sig').disabled = actual === laminas.length - 1;
-    if (!desdeHash) history.replaceState(null, '', '#' + laminas[actual].dataset.clave);
+    const vis = laminas.map((l, j) => j).filter(enRuta);
+    document.getElementById('ant').disabled = actual <= vis[0];
+    document.getElementById('sig').disabled = actual >= vis[vis.length - 1];
+    if (ruta) document.getElementById('contador').textContent = (vis.indexOf(actual) + 1 || '–') + ' de ' + vis.length;
+    document.dispatchEvent(new CustomEvent('seccion', { detail: laminas[actual].dataset.clave }));
+    if (!desdeHash) history.replaceState(null, '', location.pathname + location.search + '#' + laminas[actual].dataset.clave);
     ajustarAltura();
   }
-  document.getElementById('ant').addEventListener('click', () => ir(actual - 1));
-  document.getElementById('sig').addEventListener('click', () => ir(actual + 1));
+  document.getElementById('ant').addEventListener('click', () => paso(-1));
+  document.getElementById('sig').addEventListener('click', () => paso(1));
   document.addEventListener('keydown', (e) => {
-    if (/INPUT|TEXTAREA|SELECT/.test(document.activeElement && document.activeElement.tagName)) return;
-    if (e.key === 'ArrowRight') ir(actual + 1);
-    if (e.key === 'ArrowLeft') ir(actual - 1);
+    const a = document.activeElement;
+    if (/INPUT|TEXTAREA|SELECT/.test(a && a.tagName) || (a && a.closest && a.closest('.mapa-caja'))) return;
+    if (e.key === 'ArrowRight') paso(1);
+    if (e.key === 'ArrowLeft') paso(-1);
   });
   let x0 = null, y0 = null;
-  visor.addEventListener('touchstart', (e) => { if (e.target.closest('input')) return; x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+  visor.addEventListener('touchstart', (e) => { if (e.target.closest('input, .mapa-caja, .chat-log')) { x0 = null; return; } x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
   visor.addEventListener('touchend', (e) => {
     if (x0 == null) return;
     const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
-    if (Math.abs(dx) > 60 && Math.abs(dx) > 1.5 * Math.abs(dy)) ir(actual + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 60 && Math.abs(dx) > 1.5 * Math.abs(dy)) paso(dx < 0 ? 1 : -1);
     x0 = null;
   });
   function desdeHash() { const id = location.hash.replace('#', ''); const i = laminas.findIndex((l) => l.dataset.clave === id); return i >= 0 ? i : 0; }
@@ -910,6 +1529,11 @@ dash.load("sii", [{"anio": 2005, "empresas": 5, "ventas_uf": null, "trabajadores
   window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { dash.render(); ajustarAltura(); }, 150); });
   ir(desdeHash(), true);
   dash.render();
+  ASIS.montar();
+  const perfil0 = new URLSearchParams(location.search).get('perfil');
+  if (perfil0) ponerRuta(perfil0, false);
+  VIVO.pintarEstado();
+  VIVO.iniciar();
 </script>
 </body>
 </html>
