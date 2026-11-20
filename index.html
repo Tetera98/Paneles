@@ -68,6 +68,7 @@
   .nv-legend { display: flex; flex-wrap: wrap; gap: 6px var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin-top: var(--cds-gap-sm); }
   .nv-legend span { display: inline-flex; align-items: center; gap: 6px; }
   .nv-sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  .nv-ln { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
   .nv-sw-est { background-image: repeating-linear-gradient(45deg, var(--cds-chart-muted) 0 3px, transparent 3px 6px); border: 1px solid var(--cds-chart-muted); }
   .nv-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: var(--cds-gap-sm) 0 0; line-height: 1.5; max-width: 74ch; }
   .nv-find { border-left: 3px solid var(--color-fg); padding: 2px 0 2px 12px; margin: 0 0 var(--cds-gap-md); line-height: 1.5; max-width: 70ch; }
@@ -81,6 +82,11 @@
   .nv-svg .grid line { stroke: var(--cds-chart-grid); }
   .nv-svg .axis path, .nv-svg .axis line { stroke: var(--cds-chart-axis); }
   .nv-svg .axis text { fill: var(--cds-text-secondary); font-size: 11px; }
+  .nv-tabla { overflow-x: auto; margin-top: var(--cds-gap-md); }
+  .nv-tabla table { border-collapse: collapse; font-size: 12px; font-variant-numeric: tabular-nums; min-width: 520px; }
+  .nv-tabla th, .nv-tabla td { padding: 4px 8px; text-align: right; border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+  .nv-tabla th:first-child, .nv-tabla td:first-child { text-align: left; }
+  .nv-tabla th { color: var(--color-fg-muted); font-weight: 500; }
   .nv-metodo { font-size: 14px; line-height: 1.6; max-width: 78ch; }
   .nv-metodo h3 { font-size: 15px; margin: 18px 0 4px; }
   .nv-metodo p { margin: 0 0 8px; }
@@ -140,19 +146,21 @@
         <div class="nv-card">
           <p class="nv-step">1 · Indicador 7</p>
           <h2>Termómetro de presión: visitantes por residente, mes a mes</h2>
-          <p class="nv-sub">La parte sólida es lo medido: visitantes que llegaron en ferry. La parte rayada es una estimación de los que llegan en avión y por el paso desde Ushuaia, que no tienen datos mensuales. Se supone que siguen el mismo calendario que el ferry, que traen la misma proporción de residentes y que cada pasajero de ferry equivale a <b class="nv-num" data-draw="k-actual">—</b> llegadas por las otras vías. Ese factor viene de la temporada 2024-25 (aéreo y Ushuaia según la Municipalidad, frente al registro del ferry) y lo puedes mover.</p>
+          <p class="nv-sub">La parte sólida es lo medido: visitantes que llegaron en ferry. La parte rayada es una estimación de los que llegan en avión y por el paso desde Ushuaia, que no tienen datos mensuales. Se supone que siguen el mismo calendario que el ferry, que traen la misma proporción de residentes y que cada pasajero de ferry equivale a <b class="nv-num" data-draw="k-actual">—</b> llegadas por las otras vías. Ese factor viene de la temporada 2024-25 (aéreo y Ushuaia según la Municipalidad, frente al registro del ferry) y lo puedes mover. La línea verde son las llegadas de pasajeros a establecimientos de alojamiento turístico de toda la Región de Magallanes (INE) y se lee en el eje de la derecha: sirve para comparar el calendario y la tendencia de la isla con los de la región, no el tamaño.</p>
           <div class="nv-bar">
             <label class="nv-range">Llegadas por otras vías por cada pasajero de ferry <input type="range" id="slider-k" min="0" max="12" step="0.1" aria-label="Factor de las otras vías"> <b class="nv-num" data-draw="k-slider">—</b></label>
             <button class="nv-btn" type="button" id="btn-calibrar">Volver a la calibración</button>
             <button class="nv-btn" type="button" id="btn-cruceros" aria-pressed="false">Sumar cruceros</button>
+            <button class="nv-btn" type="button" id="btn-ine" aria-pressed="true">Llegadas a alojamiento en Magallanes</button>
           </div>
           <div class="nv-chart nv-h300" data-draw="presion"></div>
           <div class="nv-legend">
             <span><i class="nv-sw nv-c0"></i>Medido: visitantes en ferry</span>
             <span><i class="nv-sw nv-sw-est"></i>Estimado: avión y paso desde Ushuaia</span>
             <span><i class="nv-sw nv-c1"></i>Pasajeros de cruceros (si se suman)</span>
+            <span><i class="nv-ln nv-c2"></i>Llegadas a alojamiento turístico, Región de Magallanes (INE, eje derecho)</span>
           </div>
-          <p class="nv-note">Los cruceros quedan fuera por defecto: muchos pasajeros de expediciones antárticas llegan en vuelos chárter para embarcar en Puerto Williams, y sumarlos los contaría dos veces. Población: Censo 2024 (INE). Puerto Williams tiene además población flotante de la Armada que el Censo no refleja del todo.</p>
+          <p class="nv-note">Los cruceros quedan fuera por defecto: muchos pasajeros de expediciones antárticas llegan en vuelos chárter para embarcar en Puerto Williams, y sumarlos los contaría dos veces. Llegadas a alojamiento: INE, Encuesta Mensual de Alojamiento Turístico, Región de Magallanes (julio de 2016 a julio de 2026). Población: Censo 2024 (INE). Puerto Williams tiene además población flotante de la Armada que el Censo no refleja del todo.</p>
         </div>
       </section>
 
@@ -213,6 +221,23 @@
         </div>
       </section>
 
+      <section class="lamina" id="sec-economia" data-clave="economia" data-tab="7 · Economía turística">
+        <div class="nv-card">
+          <p class="nv-step">7 · Economía turística</p>
+          <h2>¿Las ventas del turismo local siguen a los visitantes?</h2>
+          <p class="nv-find" data-draw="economia-hallazgo"></p>
+          <p class="nv-sub">Índice de cada año calendario con 2018 = 100 para tres series: las ventas anuales en UF de las empresas de alojamiento y servicio de comidas con domicilio en Cabo de Hornos (SII), los visitantes que llegaron en ferry (TABSA) y las llegadas a alojamiento turístico de toda la Región de Magallanes (INE). La UF se reajusta con la inflación, así que los años se comparan en términos reales. Pasa el cursor por un año para ver las cifras absolutas.</p>
+          <div class="nv-chart nv-h300" data-draw="economia"></div>
+          <div class="nv-legend">
+            <span><i class="nv-ln nv-c4"></i>Ventas de alojamiento y comidas en Cabo de Hornos (SII, UF)</span>
+            <span><i class="nv-ln nv-c0"></i>Visitantes en ferry (TABSA)</span>
+            <span><i class="nv-ln nv-c2"></i>Llegadas a alojamiento, Región de Magallanes (INE)</span>
+          </div>
+          <div class="nv-tabla" data-draw="economia-tabla"></div>
+          <p class="nv-note">El SII cuenta a cada empresa en la comuna de su casa matriz: un operador que trabaja en Puerto Williams con domicilio en otra comuna no aparece aquí. El rubro incluye restaurantes que atienden también a residentes. Las cifras del SII son preliminares y pueden cambiar por rectificaciones; el salto de 2025 está por confirmar. Años 2005 a 2007: ventas reservadas por el SII (10 o menos informantes).</p>
+        </div>
+      </section>
+
       <section class="lamina" id="sec-fuentes" data-clave="fuentes" data-tab="Fuentes y métodos">
         <div class="nv-card">
           <h2>¿Qué tan firme es cada número?</h2>
@@ -220,7 +245,7 @@
           <div class="nv-chart nv-h220" data-draw="calidad"></div>
           <div class="nv-metodo">
             <h3>Fuentes</h3>
-            <p>Ferry: registro por viaje de TABSA (servicio CAM0064), vía Subsecretaría de Transportes. Visitantes = pasajeros no residentes que llegan a Puerto Williams desde Punta Arenas y Yendegaia. Cruceros: EPAustral, pasajeros a bordo y recaladas en Puerto Williams; programación 2026-27 sujeta a cambios. Magallanes: INE, Encuesta Mensual de Alojamiento Turístico, llegadas de pasajeros a la región. Trekking: Carabineros de Chile, 4ª Comisaría Puerto Williams. Oficina de Información Turística: Municipalidad de Cabo de Hornos. Vías de entrada 2024-25: Municipalidad (aéreo: DAP; paso desde Ushuaia: PDI). Población: INE, Censo 2024, vía BCN.</p>
+            <p>Ferry: registro por viaje de TABSA (servicio CAM0064), vía Subsecretaría de Transportes. Visitantes = pasajeros no residentes que llegan a Puerto Williams desde Punta Arenas y Yendegaia. Cruceros: EPAustral, pasajeros a bordo y recaladas en Puerto Williams; programación 2026-27 sujeta a cambios. Magallanes: INE, Encuesta Mensual de Alojamiento Turístico, llegadas de pasajeros a la región. Trekking: Carabineros de Chile, 4ª Comisaría Puerto Williams. Oficina de Información Turística: Municipalidad de Cabo de Hornos. Vías de entrada 2024-25: Municipalidad (aéreo: DAP; paso desde Ushuaia: PDI). Población: INE, Censo 2024, vía BCN. Ventas de alojamiento y comidas: SII, Estadísticas de Empresas por Comuna y Rubro económico (años comerciales 2005-2025, actualización de octubre de 2026), rubro I, comuna del domicilio o casa matriz Cabo de Hornos.</p>
             <h3>Métodos</h3>
             <p>Presión turística: visitantes por residente = (visitantes en ferry × (1 + factor)) / población. El factor reparte las llegadas por avión y por Ushuaia con el calendario del ferry y supone la misma proporción de residentes que en el ferry: es un supuesto, no un dato. Sin cifras mensuales de la DAP o la JAC esta parte seguirá siendo estimada.</p>
             <p>Concentración: se ordenan los meses de mayor a menor y se cuentan los necesarios para llegar al 80% del total de la temporada.</p>
@@ -234,7 +259,7 @@
   </div>
 
   <footer class="pie">
-    Observatorio de Turismo Sostenible de Puerto Williams. Datos actualizados al 16 de noviembre de 2026 (series hasta septiembre de 2026). Fuentes en la sección «Fuentes y métodos». Gráficos hechos con D3.js (licencia ISC).
+    Observatorio de Turismo Sostenible de Puerto Williams. Datos actualizados al 20 de noviembre de 2026 (series mensuales hasta septiembre de 2026; SII hasta 2025). Fuentes en la sección «Fuentes y métodos». Gráficos hechos con D3.js (licencia ISC).
   </footer>
 </div>
 
@@ -246,7 +271,7 @@ window.dash = (function () {
   const sources = {};
   const calcs = {};
   let cache = {};
-  let params = { k: null, cruceros: false, chile: false, calidad: false };
+  let params = { k: null, cruceros: false, chile: false, calidad: false, ine: true };
   const draws = {};
   const listeners = [];
   const colors = ['#2f6690', '#d1802a', '#4f8f5b', '#7f5aa6', '#c04a43'];
@@ -289,7 +314,7 @@ window.dash = (function () {
     onData(fn) { listeners.push(fn); },
     params() { return Object.assign({}, params); },
     setParams(p) { params = Object.assign({}, params, p); schedule(); },
-    resetParams() { params = { k: null, cruceros: false, chile: false, calidad: false }; schedule(); },
+    resetParams() { params = { k: null, cruceros: false, chile: false, calidad: false, ine: true }; schedule(); },
     render,
   };
 })();
@@ -299,7 +324,8 @@ dash.load("poblacion", [{"comuna": "Cabo de Hornos", "anio": 2017, "poblacion": 
 dash.load("puertas", [{"via": "Aéreo (Punta Arenas)", "llegadas": 13254, "estado": "validado"}, {"via": "Ferry (Punta Arenas)", "llegadas": 1718, "estado": "por confirmar"}, {"via": "Paso desde Ushuaia", "llegadas": 1429, "estado": "validado"}]);
 dash.load("trekking", [{"anio": 1994, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 20, "estado": "validado"}, {"anio": 1995, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 29, "estado": "validado"}, {"anio": 1996, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 29, "estado": "validado"}, {"anio": 1997, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 37, "estado": "validado"}, {"anio": 1998, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 70, "estado": "validado"}, {"anio": 1999, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 107, "estado": "validado"}, {"anio": 2000, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 184, "estado": "validado"}, {"anio": 2001, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 83, "estado": "validado"}, {"anio": 2002, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 95, "estado": "validado"}, {"anio": 2003, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 224, "estado": "validado"}, {"anio": 2004, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 204, "estado": "validado"}, {"anio": 2005, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 179, "estado": "validado"}, {"anio": 2006, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 259, "estado": "validado"}, {"anio": 2007, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 627, "estado": "validado"}, {"anio": 2008, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 300, "estado": "validado"}, {"anio": 2009, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 360, "estado": "validado"}, {"anio": 2010, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 425, "estado": "validado"}, {"anio": 2011, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 535, "estado": "validado"}, {"anio": 2012, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 760, "estado": "validado"}, {"anio": 2013, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 789, "estado": "validado"}, {"anio": 2014, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 730, "estado": "validado"}, {"anio": 2015, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 142, "estado": "validado"}, {"anio": 2016, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 363, "estado": "validado"}, {"anio": 2017, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 1234, "estado": "validado"}, {"anio": 2018, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 1604, "estado": "validado"}, {"anio": 2019, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 1627, "estado": "validado"}, {"anio": 2020, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 995, "estado": "validado"}, {"anio": 2021, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 154, "estado": "validado"}, {"anio": 2022, "serie": "Excursionistas Isla Navarino (Carabineros, año calendario)", "valor": 667, "estado": "validado"}, {"anio": 2022, "serie": "Circuito Dientes de Navarino (Carabineros, temporada que termina ese año)", "temporada": "2021-2022", "valor": 829, "estado": "validado"}, {"anio": 2023, "serie": "Circuito Dientes de Navarino (Carabineros, temporada que termina ese año)", "temporada": "2022-2023", "valor": 955, "estado": "validado"}, {"anio": 2024, "serie": "Circuito Dientes de Navarino (Carabineros, temporada que termina ese año)", "temporada": "2023-2024", "valor": 1172, "estado": "validado"}, {"anio": 2025, "serie": "Circuito Dientes de Navarino (Carabineros, temporada que termina ese año)", "temporada": "2024-2025", "valor": 1217, "estado": "validado"}, {"anio": 2026, "serie": "Circuito Dientes de Navarino (Carabineros, temporada que termina ese año)", "temporada": "2025-2026", "valor": 1227, "estado": "inconsistente"}]);
 dash.load("paises", [{"pais": "Alemania", "oit_atenciones": 60, "oit_participacion": 0.0495, "dientes_turistas": 111, "dientes_participacion": 0.0905}, {"pais": "Argentina", "oit_atenciones": 13, "oit_participacion": 0.0107, "dientes_turistas": 37, "dientes_participacion": 0.0302}, {"pais": "Australia", "oit_atenciones": 4, "oit_participacion": 0.0033, "dientes_turistas": 21, "dientes_participacion": 0.0171}, {"pais": "Austria", "oit_atenciones": 3, "oit_participacion": 0.0025, "dientes_turistas": 8, "dientes_participacion": 0.0065}, {"pais": "Bolivia", "oit_atenciones": 2, "oit_participacion": 0.0016, "dientes_turistas": 0, "dientes_participacion": 0.0}, {"pais": "Brasil", "oit_atenciones": 11, "oit_participacion": 0.0091, "dientes_turistas": 37, "dientes_participacion": 0.0302}, {"pais": "Bélgica", "oit_atenciones": 8, "oit_participacion": 0.0066, "dientes_turistas": 27, "dientes_participacion": 0.022}, {"pais": "Canadá", "oit_atenciones": 7, "oit_participacion": 0.0058, "dientes_turistas": 27, "dientes_participacion": 0.022}, {"pais": "Chile", "oit_atenciones": 738, "oit_participacion": 0.6084, "dientes_turistas": 594, "dientes_participacion": 0.4841}, {"pais": "China", "oit_atenciones": 7, "oit_participacion": 0.0058, "dientes_turistas": 1, "dientes_participacion": 0.0008}, {"pais": "Colombia", "oit_atenciones": 4, "oit_participacion": 0.0033, "dientes_turistas": 0, "dientes_participacion": 0.0}, {"pais": "Costa Rica", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 1, "dientes_participacion": 0.0008}, {"pais": "Dinamarca", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 1, "dientes_participacion": 0.0008}, {"pais": "Ecuador", "oit_atenciones": 1, "oit_participacion": 0.0008, "dientes_turistas": 1, "dientes_participacion": 0.0008}, {"pais": "El Salvador", "oit_atenciones": 1, "oit_participacion": 0.0008, "dientes_turistas": 0, "dientes_participacion": 0.0}, {"pais": "Eslovaquia", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 11, "dientes_participacion": 0.009}, {"pais": "España", "oit_atenciones": 35, "oit_participacion": 0.0289, "dientes_turistas": 24, "dientes_participacion": 0.0196}, {"pais": "Estados Unidos", "oit_atenciones": 59, "oit_participacion": 0.0486, "dientes_turistas": 69, "dientes_participacion": 0.0562}, {"pais": "Filipinas", "oit_atenciones": 2, "oit_participacion": 0.0016, "dientes_turistas": 0, "dientes_participacion": 0.0}, {"pais": "Finlandia", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 1, "dientes_participacion": 0.0008}, {"pais": "Francia", "oit_atenciones": 152, "oit_participacion": 0.1253, "dientes_turistas": 98, "dientes_participacion": 0.0799}, {"pais": "Grecia", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 1, "dientes_participacion": 0.0008}, {"pais": "Hungría", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 13, "dientes_participacion": 0.0106}, {"pais": "India", "oit_atenciones": 4, "oit_participacion": 0.0033, "dientes_turistas": 0, "dientes_participacion": 0.0}, {"pais": "Irlanda", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 4, "dientes_participacion": 0.0033}, {"pais": "Israel", "oit_atenciones": 1, "oit_participacion": 0.0008, "dientes_turistas": 24, "dientes_participacion": 0.0196}, {"pais": "Italia", "oit_atenciones": 8, "oit_participacion": 0.0066, "dientes_turistas": 13, "dientes_participacion": 0.0106}, {"pais": "Japón", "oit_atenciones": 7, "oit_participacion": 0.0058, "dientes_turistas": 4, "dientes_participacion": 0.0033}, {"pais": "Luxemburgo", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 1, "dientes_participacion": 0.0008}, {"pais": "México", "oit_atenciones": 2, "oit_participacion": 0.0016, "dientes_turistas": 6, "dientes_participacion": 0.0049}, {"pais": "Nueva Zelanda", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 2, "dientes_participacion": 0.0016}, {"pais": "Países Bajos", "oit_atenciones": 15, "oit_participacion": 0.0124, "dientes_turistas": 29, "dientes_participacion": 0.0236}, {"pais": "Perú", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 1, "dientes_participacion": 0.0008}, {"pais": "Polonia", "oit_atenciones": 3, "oit_participacion": 0.0025, "dientes_turistas": 2, "dientes_participacion": 0.0016}, {"pais": "Portugal", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 3, "dientes_participacion": 0.0024}, {"pais": "Reino Unido", "oit_atenciones": 19, "oit_participacion": 0.0157, "dientes_turistas": 15, "dientes_participacion": 0.0122}, {"pais": "Rep. Dominicana", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 2, "dientes_participacion": 0.0016}, {"pais": "República Checa", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 8, "dientes_participacion": 0.0065}, {"pais": "Rusia", "oit_atenciones": 15, "oit_participacion": 0.0124, "dientes_turistas": 5, "dientes_participacion": 0.0041}, {"pais": "Serbia", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 1, "dientes_participacion": 0.0008}, {"pais": "Sin información", "oit_atenciones": 5, "oit_participacion": 0.0041, "dientes_turistas": 0, "dientes_participacion": 0.0}, {"pais": "Singapur", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 2, "dientes_participacion": 0.0016}, {"pais": "Sudáfrica", "oit_atenciones": 1, "oit_participacion": 0.0008, "dientes_turistas": 1, "dientes_participacion": 0.0008}, {"pais": "Suecia", "oit_atenciones": 0, "oit_participacion": 0.0, "dientes_turistas": 1, "dientes_participacion": 0.0008}, {"pais": "Suiza", "oit_atenciones": 16, "oit_participacion": 0.0132, "dientes_turistas": 20, "dientes_participacion": 0.0163}, {"pais": "Tailandia", "oit_atenciones": 1, "oit_participacion": 0.0008, "dientes_turistas": 0, "dientes_participacion": 0.0}, {"pais": "Taiwan", "oit_atenciones": 1, "oit_participacion": 0.0008, "dientes_turistas": 0, "dientes_participacion": 0.0}, {"pais": "Turquía", "oit_atenciones": 3, "oit_participacion": 0.0025, "dientes_turistas": 0, "dientes_participacion": 0.0}, {"pais": "Uruguay", "oit_atenciones": 2, "oit_participacion": 0.0016, "dientes_turistas": 0, "dientes_participacion": 0.0}, {"pais": "Venezuela", "oit_atenciones": 3, "oit_participacion": 0.0025, "dientes_turistas": 0, "dientes_participacion": 0.0}]);
-dash.load("temporadas_cruceros", [{"temporada": "2023-2024", "mes": 9, "mes_nombre": "sep", "recaladas": 0, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2023-2024", "mes": 10, "mes_nombre": "oct", "recaladas": 2, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2023-2024", "mes": 11, "mes_nombre": "nov", "recaladas": 7, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2023-2024", "mes": 12, "mes_nombre": "dic", "recaladas": 6, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2023-2024", "mes": 1, "mes_nombre": "ene", "recaladas": 7, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2023-2024", "mes": 2, "mes_nombre": "feb", "recaladas": 6, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2023-2024", "mes": 3, "mes_nombre": "mar", "recaladas": 9, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2023-2024", "mes": 4, "mes_nombre": "abr", "recaladas": 0, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 9, "mes_nombre": "sep", "recaladas": 0, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 10, "mes_nombre": "oct", "recaladas": 1, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 11, "mes_nombre": "nov", "recaladas": 6, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 12, "mes_nombre": "dic", "recaladas": 7, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 1, "mes_nombre": "ene", "recaladas": 12, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 2, "mes_nombre": "feb", "recaladas": 7, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 3, "mes_nombre": "mar", "recaladas": 5, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 4, "mes_nombre": "abr", "recaladas": 0, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 9, "mes_nombre": "sep", "recaladas": 1, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 10, "mes_nombre": "oct", "recaladas": 3, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 11, "mes_nombre": "nov", "recaladas": 12, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 12, "mes_nombre": "dic", "recaladas": 10, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 1, "mes_nombre": "ene", "recaladas": 8, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 2, "mes_nombre": "feb", "recaladas": 9, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 3, "mes_nombre": "mar", "recaladas": 10, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 4, "mes_nombre": "abr", "recaladas": 1, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2026-2027", "mes": 9, "mes_nombre": "sep", "recaladas": 0, "tipo": "Programadas", "estado": "por confirmar"}, {"temporada": "2026-2027", "mes": 10, "mes_nombre": "oct", "recaladas": 3, "tipo": "Programadas", "estado": "por confirmar"}, {"temporada": "2026-2027", "mes": 11, "mes_nombre": "nov", "recaladas": 10, "tipo": "Programadas", "estado": "por confirmar"}, {"temporada": "2026-2027", "mes": 12, "mes_nombre": "dic", "recaladas": 7, "tipo": "Programadas", "estado": "por confirmar"}, {"temporada": "2026-2027", "mes": 1, "mes_nombre": "ene", "recaladas": 6, "tipo": "Programadas", "estado": "por confirmar"}, {"temporada": "2026-2027", "mes": 2, "mes_nombre": "feb", "recaladas": 5, "tipo": "Programadas", "estado": "por confirmar"}, {"temporada": "2026-2027", "mes": 3, "mes_nombre": "mar", "recaladas": 3, "tipo": "Programadas", "estado": "por confirmar"}, {"temporada": "2026-2027", "mes": 4, "mes_nombre": "abr", "recaladas": 0, "tipo": "Programadas", "estado": "por confirmar"}]);</script>
+dash.load("temporadas_cruceros", [{"temporada": "2023-2024", "mes": 9, "mes_nombre": "sep", "recaladas": 0, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2023-2024", "mes": 10, "mes_nombre": "oct", "recaladas": 2, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2023-2024", "mes": 11, "mes_nombre": "nov", "recaladas": 7, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2023-2024", "mes": 12, "mes_nombre": "dic", "recaladas": 6, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2023-2024", "mes": 1, "mes_nombre": "ene", "recaladas": 7, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2023-2024", "mes": 2, "mes_nombre": "feb", "recaladas": 6, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2023-2024", "mes": 3, "mes_nombre": "mar", "recaladas": 9, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2023-2024", "mes": 4, "mes_nombre": "abr", "recaladas": 0, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 9, "mes_nombre": "sep", "recaladas": 0, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 10, "mes_nombre": "oct", "recaladas": 1, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 11, "mes_nombre": "nov", "recaladas": 6, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 12, "mes_nombre": "dic", "recaladas": 7, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 1, "mes_nombre": "ene", "recaladas": 12, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 2, "mes_nombre": "feb", "recaladas": 7, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 3, "mes_nombre": "mar", "recaladas": 5, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2024-2025", "mes": 4, "mes_nombre": "abr", "recaladas": 0, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 9, "mes_nombre": "sep", "recaladas": 1, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 10, "mes_nombre": "oct", "recaladas": 3, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 11, "mes_nombre": "nov", "recaladas": 12, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 12, "mes_nombre": "dic", "recaladas": 10, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 1, "mes_nombre": "ene", "recaladas": 8, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 2, "mes_nombre": "feb", "recaladas": 9, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 3, "mes_nombre": "mar", "recaladas": 10, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2025-2026", "mes": 4, "mes_nombre": "abr", "recaladas": 1, "tipo": "Realizadas", "estado": "validado"}, {"temporada": "2026-2027", "mes": 9, "mes_nombre": "sep", "recaladas": 0, "tipo": "Programadas", "estado": "por confirmar"}, {"temporada": "2026-2027", "mes": 10, "mes_nombre": "oct", "recaladas": 3, "tipo": "Programadas", "estado": "por confirmar"}, {"temporada": "2026-2027", "mes": 11, "mes_nombre": "nov", "recaladas": 10, "tipo": "Programadas", "estado": "por confirmar"}, {"temporada": "2026-2027", "mes": 12, "mes_nombre": "dic", "recaladas": 7, "tipo": "Programadas", "estado": "por confirmar"}, {"temporada": "2026-2027", "mes": 1, "mes_nombre": "ene", "recaladas": 6, "tipo": "Programadas", "estado": "por confirmar"}, {"temporada": "2026-2027", "mes": 2, "mes_nombre": "feb", "recaladas": 5, "tipo": "Programadas", "estado": "por confirmar"}, {"temporada": "2026-2027", "mes": 3, "mes_nombre": "mar", "recaladas": 3, "tipo": "Programadas", "estado": "por confirmar"}, {"temporada": "2026-2027", "mes": 4, "mes_nombre": "abr", "recaladas": 0, "tipo": "Programadas", "estado": "por confirmar"}]);
+dash.load("sii", [{"anio": 2005, "empresas": 5, "ventas_uf": null, "trabajadores": 2}, {"anio": 2006, "empresas": 8, "ventas_uf": null, "trabajadores": 3}, {"anio": 2007, "empresas": 8, "ventas_uf": null, "trabajadores": 2}, {"anio": 2008, "empresas": 11, "ventas_uf": 2573.17, "trabajadores": 2}, {"anio": 2009, "empresas": 15, "ventas_uf": 3213.59, "trabajadores": 7}, {"anio": 2010, "empresas": 13, "ventas_uf": 4488.1, "trabajadores": 2}, {"anio": 2011, "empresas": 12, "ventas_uf": 3994.96, "trabajadores": 0}, {"anio": 2012, "empresas": 15, "ventas_uf": 6022.03, "trabajadores": 0}, {"anio": 2013, "empresas": 16, "ventas_uf": 22969.76, "trabajadores": 32}, {"anio": 2014, "empresas": 17, "ventas_uf": 19994.35, "trabajadores": 31}, {"anio": 2015, "empresas": 23, "ventas_uf": 29946.0, "trabajadores": 23}, {"anio": 2016, "empresas": 21, "ventas_uf": 33902.37, "trabajadores": 39}, {"anio": 2017, "empresas": 25, "ventas_uf": 30361.52, "trabajadores": 37}, {"anio": 2018, "empresas": 27, "ventas_uf": 42467.73, "trabajadores": 66}, {"anio": 2019, "empresas": 29, "ventas_uf": 38694.16, "trabajadores": 58}, {"anio": 2020, "empresas": 35, "ventas_uf": 20460.09, "trabajadores": 51}, {"anio": 2021, "empresas": 34, "ventas_uf": 52315.49, "trabajadores": 73}, {"anio": 2022, "empresas": 41, "ventas_uf": 47614.36, "trabajadores": 71}, {"anio": 2023, "empresas": 40, "ventas_uf": 55735.42, "trabajadores": 71}, {"anio": 2024, "empresas": 40, "ventas_uf": 56361.94, "trabajadores": 74}, {"anio": 2025, "empresas": 36, "ventas_uf": 123524.51, "trabajadores": 118}]);</script>
 <script>
   window.NV = (function () {
     const MES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
@@ -308,7 +334,7 @@ dash.load("temporadas_cruceros", [{"temporada": "2023-2024", "mes": 9, "mes_nomb
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const params = () => {
       const p = dash.params();
-      return { k: p.k === null || p.k === undefined || p.k === '' ? null : Number(p.k), cruceros: p.cruceros === true, chile: p.chile === true, calidad: p.calidad === true };
+      return { k: p.k === null || p.k === undefined || p.k === '' ? null : Number(p.k), cruceros: p.cruceros === true, chile: p.chile === true, calidad: p.calidad === true, ine: p.ine !== false };
     };
     const hl = {};
     let hoverT = null;
@@ -365,7 +391,8 @@ dash.load("temporadas_cruceros", [{"temporada": "2023-2024", "mes": 9, "mes_nomb
         return { periodo: r.periodo, fecha: r.fecha, temporada: r.temporada, mes: Number(r.mes),
           ferry_visitantes: nr, estimado_otras_vias: nr * k, cruceros: cru,
           medido_por_residente: pob ? nr / pob : null, estimado_por_residente: pob ? nr * k / pob : null, cruceros_por_residente: pob ? cru / pob : null,
-          visitantes_por_residente: pob ? (nr * (1 + k) + cru) / pob : null, factor: k, poblacion: pob, estado: r.ferry_estado };
+          visitantes_por_residente: pob ? (nr * (1 + k) + cru) / pob : null, factor: k, poblacion: pob, estado: r.ferry_estado,
+          ine: r.ine_magallanes_llegadas == null ? null : Number(r.ine_magallanes_llegadas) };
       });
     }
   });
@@ -434,6 +461,23 @@ dash.load("temporadas_cruceros", [{"temporada": "2023-2024", "mes": 9, "mes_nomb
       })
   });
 
+  dash.calc('economia', {
+    inputs: ['sii', 'mensual'],
+    fn: (sii, mensual) => {
+      const porAnio = d3.rollup(mensual, (v) => ({
+        ferry: v.length === 12 && v.every((r) => r.ferry_no_residentes != null) ? d3.sum(v, (r) => Number(r.ferry_no_residentes)) : null,
+        ine: v.filter((r) => r.ine_magallanes_llegadas != null).length === 12 ? d3.sum(v, (r) => Number(r.ine_magallanes_llegadas)) : null,
+      }), (r) => Number(r.anio));
+      const filas = sii.map((r) => ({ anio: Number(r.anio), empresas: r.empresas, ventas: r.ventas_uf, trabajadores: r.trabajadores,
+        ferry: (porAnio.get(Number(r.anio)) || {}).ferry ?? null, ine: (porAnio.get(Number(r.anio)) || {}).ine ?? null }));
+      const b = filas.find((r) => r.anio === 2018);
+      return filas.filter((r) => r.anio >= 2016).map((r) => ({ ...r,
+        ventas_idx: r.ventas != null ? 100 * r.ventas / b.ventas : null,
+        ferry_idx: r.ferry != null ? 100 * r.ferry / b.ferry : null,
+        ine_idx: r.ine != null ? 100 * r.ine / b.ine : null }));
+    }
+  });
+
   dash.calc('kpis', {
     inputs: ['presion', 'indice', 'concentracion'],
     fn: (presion, indice, concentracion) => {
@@ -470,10 +514,10 @@ dash.load("temporadas_cruceros", [{"temporada": "2023-2024", "mes": 9, "mes_nomb
     const rows = dash.data('presion').data;
     const p = NV.params();
     const W = el.clientWidth || 360, H = W < 520 ? 240 : 300;
-    const m = { t: 14, r: 10, b: 30, l: 36 };
+    const m = { t: 14, r: p.ine ? 50 : 10, b: 30, l: 36 };
     el.replaceChildren();
     const svg = d3.select(el).append('svg').attr('class', 'nv-svg').attr('width', '100%').attr('height', H).attr('viewBox', [0, 0, W, H])
-      .attr('role', 'img').attr('aria-label', 'Visitantes estimados por residente en cada mes, de 2016 a 2026');
+      .attr('role', 'img').attr('aria-label', 'Visitantes estimados por residente en cada mes, de 2016 a 2026' + (p.ine ? ', con las llegadas a alojamiento turístico de la Región de Magallanes en el eje derecho' : ''));
     const x = d3.scaleBand().domain(rows.map((r) => r.fecha)).range([m.l, W - m.r]).paddingInner(0.15);
     const ymax = d3.max(rows, (r) => r.visitantes_por_residente) || 1;
     const y = d3.scaleLinear().domain([0, ymax * 1.08]).nice().range([H - m.b, m.t]);
@@ -497,6 +541,14 @@ dash.load("temporadas_cruceros", [{"temporada": "2023-2024", "mes": 9, "mes_nomb
     if (p.calidad) bars.filter((r) => NV.estadoMalo(r.estado)).append('rect').attr('x', (r) => x(r.fecha) - 1).attr('width', x.bandwidth() + 2)
       .attr('y', (r) => y(r.visitantes_por_residente) - 2).attr('height', (r) => y(0) - y(r.visitantes_por_residente) + 2)
       .style('fill', 'none').style('stroke', 'var(--color-warn)').style('stroke-width', 2);
+    // llegadas a alojamiento en Magallanes (INE), eje derecho
+    if (p.ine) {
+      const yR = d3.scaleLinear().domain([0, (d3.max(rows, (r) => r.ine) || 1) * 1.08]).nice().range([H - m.b, m.t]);
+      svg.append('g').selectAll('text').data(yR.ticks(4)).join('text').attr('class', 'lbl').attr('x', W - m.r + 6).attr('y', (d) => yR(d)).attr('dy', '0.32em')
+        .style('fill', dash.colors[2]).text((d) => (d === 0 ? '0' : NV.fmt(d / 1000) + ' mil'));
+      svg.append('path').datum(rows).attr('d', d3.line().defined((r) => r.ine != null).x((r) => x(r.fecha) + x.bandwidth() / 2).y((r) => yR(r.ine)))
+        .style('fill', 'none').style('stroke', dash.colors[2]).style('stroke-width', 1.8).style('pointer-events', 'none');
+    }
     // máximo anotado
     const top = rows.reduce((a, b) => (b.visitantes_por_residente > a.visitantes_por_residente ? b : a), rows[0]);
     svg.append('text').attr('class', 'val').attr('text-anchor', 'end').attr('x', x(top.fecha) - 4).attr('y', y(top.visitantes_por_residente) + 10)
@@ -506,7 +558,7 @@ dash.load("temporadas_cruceros", [{"temporada": "2023-2024", "mes": 9, "mes_nomb
       .on('mousemove', (ev, r) => { NV.hover(r.temporada); tt.show(ev, r.periodo + ' · temporada ' + r.temporada, [
         [NV.fmt(r.visitantes_por_residente, 2) + ' visitantes por residente'],
         ['Ferry (medido): ' + NV.fmt(r.ferry_visitantes), 1], ['Avión y Ushuaia (estimado): ' + NV.fmt(r.estimado_otras_vias), 1]]
-        .concat(p.cruceros ? [['Cruceros: ' + NV.fmt(r.cruceros), 1]] : []).concat(NV.estadoMalo(r.estado) ? [['Ferry ' + r.estado, 1]] : [])); })
+        .concat(p.cruceros ? [['Cruceros: ' + NV.fmt(r.cruceros), 1]] : []).concat(p.ine && r.ine != null ? [['Llegadas a alojamiento en Magallanes (INE): ' + NV.fmt(r.ine), 1]] : []).concat(NV.estadoMalo(r.estado) ? [['Ferry ' + r.estado, 1]] : [])); })
       .on('mouseleave', () => { NV.hover(null); tt.hide(); });
     NV.hl.presion = (t) => bars.style('opacity', (r) => (!t || r.temporada === t ? 1 : 0.3));
   });
@@ -726,11 +778,70 @@ dash.load("temporadas_cruceros", [{"temporada": "2023-2024", "mes": 9, "mes_nomb
       svg.append('text').attr('class', 'val').attr('x', x(acc) + 6).attr('y', yy + rowH / 2).attr('dy', '0.32em').text(malos ? malos + ' por revisar' : 'todo validado');
     });
   });
+
+  // ===================== 7. economía turística =====================
+  dash.draw('economia-hallazgo', (el) => {
+    const d = dash.data('economia').data;
+    const r24 = d.find((r) => r.anio === 2024);
+    if (!r24) { el.textContent = ''; return; }
+    const b = (v) => { const e = document.createElement('b'); e.className = 'nv-num'; e.textContent = NV.fmt(v); return e; };
+    el.replaceChildren('En 2024, frente a 2018, las ventas de alojamiento y comidas de Cabo de Hornos están en ', b(r24.ventas_idx),
+      ', los visitantes en ferry en ', b(r24.ferry_idx), ' y las llegadas a alojamiento de Magallanes en ', b(r24.ine_idx), ' (2018 = 100).');
+  });
+  dash.draw('economia', (el) => {
+    if (!NV.status(el, ['economia'])) return;
+    const rows = dash.data('economia').data;
+    const W = el.clientWidth || 360, H = W < 520 ? 250 : 300;
+    const m = { t: 14, r: W < 520 ? 40 : 56, b: 30, l: 40 };
+    el.replaceChildren();
+    const svg = d3.select(el).append('svg').attr('class', 'nv-svg').attr('width', '100%').attr('height', H).attr('viewBox', [0, 0, W, H])
+      .attr('role', 'img').attr('aria-label', 'Índice anual 2018 igual a 100 de ventas de alojamiento y comidas en Cabo de Hornos, visitantes en ferry y llegadas a alojamiento en Magallanes');
+    const anios = rows.map((r) => r.anio);
+    const x = d3.scalePoint().domain(anios).range([m.l, W - m.r]).padding(0.3);
+    const vals = rows.flatMap((r) => [r.ventas_idx, r.ferry_idx, r.ine_idx]).filter((v) => v != null);
+    const y = d3.scaleLinear().domain([0, d3.max(vals) * 1.08]).nice().range([H - m.b, m.t]);
+    svg.append('g').attr('class', 'grid').selectAll('line').data(y.ticks(5)).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', (d) => y(d)).attr('y2', (d) => y(d))
+      .style('stroke', (d) => (d === 100 ? 'var(--cds-chart-reference)' : null)).style('stroke-dasharray', (d) => (d === 100 ? '4 3' : null));
+    svg.append('g').selectAll('text').data(y.ticks(5)).join('text').attr('class', 'lbl').attr('x', m.l - 6).attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end').text((d) => NV.fmt(d));
+    svg.append('g').selectAll('text').data(anios.filter((a, i) => W > 520 || i % 2 === 0)).join('text').attr('class', 'lbl').attr('text-anchor', 'middle').attr('x', (a) => x(a)).attr('y', H - 10).text((a) => a);
+    const hl = svg.append('rect').attr('y', m.t).attr('height', H - m.t - m.b).attr('width', 0).style('fill', 'var(--cds-chart-grid)').style('opacity', 0.6);
+    [['ventas_idx', 4], ['ferry_idx', 0], ['ine_idx', 2]].forEach(([c, ci]) => {
+      const pts = rows.filter((r) => r[c] != null);
+      svg.append('path').datum(rows).attr('d', d3.line().defined((r) => r[c] != null).x((r) => x(r.anio)).y((r) => y(r[c])))
+        .style('fill', 'none').style('stroke', dash.colors[ci]).style('stroke-width', 2.2);
+      svg.append('g').selectAll('circle').data(pts).join('circle').attr('cx', (r) => x(r.anio)).attr('cy', (r) => y(r[c])).attr('r', 3.2).style('fill', dash.colors[ci]);
+      const last = pts[pts.length - 1];
+      if (last) svg.append('text').attr('class', 'val').attr('x', x(last.anio) + 7).attr('y', y(last[c])).attr('dy', '0.32em').style('fill', dash.colors[ci]).text(NV.fmt(last[c]));
+    });
+    const tt = NV.tip(el);
+    svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', (r) => x(r.anio) - x.step() / 2).attr('width', x.step()).attr('y', m.t).attr('height', H - m.t - m.b).style('fill', 'transparent')
+      .on('mousemove', (ev, r) => { hl.attr('x', x(r.anio) - x.step() / 2).attr('width', x.step()); tt.show(ev, String(r.anio), [
+        ['Ventas alojamiento y comidas: ' + (r.ventas != null ? NV.fmt(r.ventas) + ' UF (' + r.empresas + ' empresas)' : 'reservado')],
+        ['Visitantes en ferry: ' + (r.ferry != null ? NV.fmt(r.ferry) : 'año incompleto')],
+        ['Llegadas a alojamiento Magallanes: ' + (r.ine != null ? NV.fmt(r.ine) : 'año incompleto')], ['2018 = 100', 1]]); })
+      .on('mouseleave', () => { hl.attr('width', 0); tt.hide(); });
+  });
+  dash.draw('economia-tabla', (el) => {
+    const rows = dash.data('economia').data;
+    el.replaceChildren();
+    if (!rows.length) return;
+    const t = document.createElement('table');
+    const h = t.createTHead().insertRow();
+    ['Año', 'Empresas (SII)', 'Ventas (UF)', 'Trabajadores (SII)', 'Visitantes ferry', 'Llegadas INE Magallanes'].forEach((c) => { const th = document.createElement('th'); th.textContent = c; h.appendChild(th); });
+    const tb = t.createTBody();
+    rows.forEach((r) => {
+      const tr = tb.insertRow();
+      [String(r.anio), NV.fmt(r.empresas), r.ventas != null ? NV.fmt(r.ventas) : 'reservado', NV.fmt(r.trabajadores), r.ferry != null ? NV.fmt(r.ferry) : '—', r.ine != null ? NV.fmt(r.ine) : '—']
+        .forEach((v) => { const td = tr.insertCell(); td.textContent = v; });
+    });
+    el.appendChild(t);
+  });
 </script>
 <script>
   // ===================== controles =====================
   document.getElementById('btn-calidad').addEventListener('click', () => dash.setParams({ calidad: !NV.params().calidad }));
   document.getElementById('btn-cruceros').addEventListener('click', () => dash.setParams({ cruceros: !NV.params().cruceros }));
+  document.getElementById('btn-ine').addEventListener('click', () => dash.setParams({ ine: !NV.params().ine }));
   document.getElementById('btn-chile').addEventListener('click', () => dash.setParams({ chile: !NV.params().chile }));
   document.getElementById('btn-calibrar').addEventListener('click', () => dash.setParams({ k: null }));
   const slider = document.getElementById('slider-k');
@@ -740,6 +851,7 @@ dash.load("temporadas_cruceros", [{"temporada": "2023-2024", "mes": 9, "mes_nomb
     document.getElementById('btn-calidad').setAttribute('aria-pressed', String(p.calidad));
     document.getElementById('btn-cruceros').setAttribute('aria-pressed', String(p.cruceros));
     document.getElementById('btn-chile').setAttribute('aria-pressed', String(p.chile));
+    document.getElementById('btn-ine').setAttribute('aria-pressed', String(p.ine));
     const cal = dash.data('calibracion');
     const k = p.k != null ? p.k : (cal.data && cal.data[0] ? cal.data[0].factor : null);
     if (document.activeElement !== slider && k != null) slider.value = String(k);
