@@ -1541,7 +1541,9 @@ window.MAPA = (function () {
       mapa.on('style.load', () => setTimeout(agregarOferta, 0));
       setTimeout(() => { if (mapa && !mapa.loaded()) aviso('Cargando relieve e imagen satelital… con conexión lenta puede tardar.'); }, 5000);
     } catch (e) {
-      aviso('No se pudo abrir el mapa 3D en este dispositivo (' + e.message + ').');
+      const gl = /webgl/i.test(String(e && (e.message || e.type || e)));
+      aviso(gl ? 'Este navegador o dispositivo no tiene activados los gráficos 3D (WebGL), así que el mapa no se puede mostrar. Prueba con otro navegador o actualiza el equipo.' : 'No se pudo abrir el mapa 3D en este dispositivo.');
+      console.warn('mapa', e);
       mapa = null;
     } finally { cargando = false; }
   }
